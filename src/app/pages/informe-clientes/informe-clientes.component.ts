@@ -9,38 +9,38 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
-import { StatsCuidadoresComponent } from '../../components/stats-cuidadores/stats-cuidadores.component';
+import { StatsClientesComponent } from '../../components/stats-clientes/stats-clientes.component';
 import {
-  Cuidador,
-  CuidadorInforme,
+  Cliente,
+  ClienteInforme,
   Estadisticas,
-} from '../../models/CuidadorInforme';
-import { InformeService } from '../../services/informe.service';
+} from '../../models/ClienteInforme';
+import { InformeClientesService } from '../../services/informe-clientes.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NgZorroModule } from '../../ngzorro.module';
 
 @Component({
-  selector: 'app-informes',
+  selector: 'app-informes-clientes',
   standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     NgZorroModule,
-    StatsCuidadoresComponent
+    StatsClientesComponent
   ],
-  templateUrl: './informes.component.html',
-  styleUrl: './informes.component.scss',
+  templateUrl: './informe-clientes.component.html',
+  styleUrl: './informe-clientes.component.scss',
 })
-export class InformesComponent {
-  informe: CuidadorInforme;
+export class InformesClientesComponent {
+  informe: ClienteInforme;
   estadisticas: Estadisticas = {
-    cuidadoresPendientes: 0,
-    cuidadoresHabilitados: 0,
-    cuidadoresNoHabilitados: 0,
-    totalCuidadores: 0,
-    cuidadoresFiltrados: 0,
-    promedioPuntuacionHabilitados: 0,
+    totalClientes: 0,
+    clientesFiltrados: 0,
+    clientes1a10: 0,
+    clientes11a20: 0,
+    clientes21a50: 0,
+    clientes51a100: 0,
   };
 
   expandSet = new Set<string>();
@@ -55,11 +55,11 @@ export class InformesComponent {
   }
 
   searchValue = '';
-  selectedStatus = 'Habilitado';
-  listCuidadores: Cuidador[] = [];
+  selectedStatus = '1-10';
+  listClientes: Cliente[] = [];
 
   constructor(
-    private informeService: InformeService,
+    private informeClientesService: InformeClientesService,
     private msg: NzMessageService
   ) {}
 
@@ -72,14 +72,15 @@ export class InformesComponent {
 
     const filtros = {
       nombre: this.searchValue,
-      estado: this.selectedStatus,
+      reservasMin: this.selectedStatus === '1-10' ? 1 : this.selectedStatus === '11-20' ? 11 : this.selectedStatus === '21-50' ? 21 : 51,
+      reservasMax: this.selectedStatus === '1-10' ? 10 : this.selectedStatus === '11-20' ? 20 : this.selectedStatus === '21-50' ? 50 : 100,
     };
 
-    this.informeService.getInformesCuidadores(filtros).subscribe({
-      next: (data: CuidadorInforme) => {
+    this.informeClientesService.getInformesClientes(filtros).subscribe({
+      next: (data: ClienteInforme) => {
         this.informe = data;
         console.log(data);
-        this.listCuidadores = data.cuidadores;
+        this.listClientes = data.clientes;
         this.estadisticas = data.estadisticas;
         this.loading = false;
       },
