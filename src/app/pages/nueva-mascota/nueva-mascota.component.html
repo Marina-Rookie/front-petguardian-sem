@@ -1,0 +1,105 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="{{mascota ? 'Editar' : 'Nueva'}} mascota"
+  nzWidth="700px"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkDisabled]="formMascota.invalid"
+>
+  <ng-container *nzModalContent>
+    <div class="row">
+      <form [formGroup]="formMascota">
+        <div class="row">
+          <div class="col d-flex flex-column align-items-center justify-content-center">
+            <img nz-image width="150px" height="150px" [nzSrc]="urlImagen"/>
+            <nz-upload
+              class="avatar-uploader"
+              nzName="avatar"
+              [(nzFileList)]="fileList"
+              [nzFileType]="'image/png,image/jpeg'"
+              [nzShowUploadList]="false"
+              [nzBeforeUpload]="beforeUpload"
+            >
+              <ng-container>
+                <div class="ant-upload-text">Cargar Foto</div>
+              </ng-container>
+            </nz-upload>
+          </div>
+          <div class="col">
+            <nz-form-item>
+              <nz-form-label nzFor="nombre">Nombre</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <input
+                  nz-input
+                  name="nombre"
+                  type="text"
+                  formControlName="nombre"
+                />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label nzFor="tipoMascota">Tipo de mascota</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-select
+                  id="tipoMascota"
+                  formControlName="tipoMascota"
+                  nzPlaceHolder="Seleccione un tipo de mascota"
+                  nzSize="large"
+                >
+                  @for (tipo of tiposMascota; track tipo._id) {
+                  <nz-option
+                    [nzValue]="tipo._id"
+                    [nzLabel]="tipo.nombre"
+                  ></nz-option>
+                  }
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label nzFor="tipoMascota">Etapa de vida</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-select
+                  id="etapaVida"
+                  formControlName="etapaVida"
+                  nzPlaceHolder="Seleccione la etapa de vida"
+                  nzSize="large"
+                >
+                  @for (etapa of etapasVida; track etapa._id) {
+                  <nz-option
+                    [nzValue]="etapa._id"
+                    [nzLabel]="etapa.nombre"
+                  ></nz-option>
+                  }
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <nz-form-item>
+          <nz-form-label nzFor="nombre">Observaciones comida</nz-form-label>
+          <nz-form-control [nzSpan]="24">
+            <textarea rows="2" nz-input formControlName="obsComida"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="nombre"
+            >Observaciones enfermedades</nz-form-label
+          >
+          <nz-form-control [nzSpan]="24">
+            <textarea
+              rows="2"
+              nz-input
+              formControlName="obsEnfermedades"
+            ></textarea>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="nombre">Otras observaciones</nz-form-label>
+          <nz-form-control [nzSpan]="24">
+            <textarea rows="2" nz-input formControlName="obsOtros"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </ng-container>
+</nz-modal>

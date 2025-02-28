@@ -1,0 +1,42 @@
+<div class="cuidadores-container">
+  <h2>Cuidadores</h2>
+  <nz-divider></nz-divider>
+
+  <form nz-form [formGroup]="searchForm" class="search-form">
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group [nzPrefix]="prefixTemplateUser"  style="height: 50px;">
+          <input type="text" nz-input formControlName="nombre" placeholder="Buscar por nombre"/>
+        </nz-input-group>
+        <ng-template #prefixTemplateUser><i nz-icon nzType="user"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group [nzPrefix]="prefixTemplateStar" style="height: 50px;">
+          <nz-input-number formControlName="puntuacion" [nzMin]="0" [nzMax]="5" [nzStep]="0.5" [nzPlaceHolder]="'Puntuación mínima'"></nz-input-number>
+        </nz-input-group>
+        <ng-template #prefixTemplateStar><i nz-icon nzType="star"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  @if (loading) {
+    <div class="spinner-container">
+      <nz-spin nzSize="large"></nz-spin>
+    </div>
+  } @else {
+    <div class="row row-cols-auto justify-content-center">
+      @for (cuidador of cuidadoresFiltrados; track $index) {
+        <div class="col">
+          <app-card-cuidador [cuidador]="cuidador"></app-card-cuidador>
+        </div>
+      }
+    </div>
+    @if (cuidadoresFiltrados.length === 0) {
+      <nz-empty [nzNotFoundContent]="'No se encontraron cuidadores'"></nz-empty>
+    }
+  }
+</div>
+<app-modal-reserva></app-modal-reserva>
+<app-modal-resenia></app-modal-resenia>

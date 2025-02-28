@@ -1,0 +1,123 @@
+<div class="row">
+  <h2>
+    Tus reservas
+  </h2>
+  <nz-divider></nz-divider>
+
+  <!-- Spinner de carga -->
+  <nz-spin [nzSize]="'large'" *ngIf="loading"></nz-spin>
+
+  <!-- Vista de tabla para pantallas grandes -->
+  @if(!loading && !isMobile){
+    <div class="mt-4">
+      <nz-table [nzData]="reservas">
+        <thead>
+          <tr>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Estado</th>
+            <th>Cuidador</th>
+            <th>Turno</th>
+            <th>Teléfono</th>
+            <th>Mascotas</th>
+            <th>Precio</th>
+            <th>Puntuación</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (reserva of reservas; track $index) {
+            <tr>
+              <td>{{ reserva.fechaInicio | date: 'dd-MM-yyyy' }}</td>
+              <td>{{ reserva.fechaFin | date: 'dd-MM-yyyy' }}</td>
+              <td>
+                <nz-badge [nzStatus]="getStatus(reserva.estado.estado)"></nz-badge>
+                {{ reserva.estado.estado }}
+              </td>
+              <td>{{ reserva.cuidador.nombre }} {{ reserva.cuidador.apellido }}</td>
+              <td>{{ reserva.horaTurno }}</td>
+              <td>{{ reserva.cuidador.telefono }}</td>
+              <td>@for(m of reserva.mascotas; track m){
+                {{m.nombre}}
+              }
+            </td>
+              <td>$ {{ reserva.tarifaTurno * reserva.contadorTurnos }}</td>
+              <td class="text-center">
+                @if (reserva.resenia?.puntuacion) {
+                  <span nz-icon nzType="star" nzTheme="outline"></span>
+                  {{reserva.resenia?.puntuacion}}
+                } @else {
+                  Sin reseñar
+                }
+              </td>
+              <td class="text-center">
+                @if (reserva.estado.estado == 'Finalizada') {
+                  <button nz-button nzType="default" (click)="openModal(reserva)" style="width: 120px;">
+                    {{reserva.resenia? 'Ver reseña' : 'Reseñar'}}
+                  </button>
+                }
+                @if(reserva.estado.estado == 'Pendiente') {
+                  <button nz-button nzType="default" nzDanger (click)="cancelarReserva(reserva)">Cancelar</button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </nz-table>
+    </div>
+  }
+
+  <!-- Vista de tarjetas para pantallas móviles -->
+   @if (!loading && isMobile) {
+     <div class="mt-4">
+      @for (reserva of reservas; track $index) {
+        <div class="mb-3">
+          <nz-card [nzTitle]="'Reserva de ' + reserva.cuidador.nombre + ' ' + reserva.cuidador.apellido">
+            <p><strong>Fecha Inicio:</strong> {{ reserva.fechaInicio | date: 'dd-MM-yyyy' }}</p>
+            <p><strong>Fecha Fin:</strong> {{ reserva.fechaFin | date: 'dd-MM-yyyy' }}</p>
+            <p><strong>Estado:    </strong>
+              <nz-badge [nzStatus]="getStatus(reserva.estado.estado)"></nz-badge>{{ reserva.estado.estado }}
+            </p>
+            <p><strong>Teléfono cuidador:</strong> {{ reserva.cuidador.telefono }}</p>
+            <p><strong>Hora turno:</strong> {{ reserva.horaTurno }}</p>
+            <p><strong>Mascotas:</strong> @for(m of reserva.mascotas; track m){
+                {{m.nombre}}
+            }</p>
+            <p><strong>Precio:</strong> ${{ reserva.tarifaTurno * reserva.contadorTurnos }}</p>
+            <p><strong>Puntuación:</strong>
+              @if (reserva.resenia?.puntuacion) {
+                <span nz-icon nzType="star" nzTheme="outline"></span>
+                {{reserva.resenia?.puntuacion}}
+              } @else {
+                Sin reseñar
+              }
+            <div class="text-center">
+                @if (reserva.estado.estado == 'Finalizada') {
+                  <button nz-button nzType="default" (click)="openModal(reserva)" style="width: 120px;">
+                    {{reserva.resenia? 'Ver reseña' : 'Reseñar'}}
+                  </button>
+                }
+                @if(reserva.estado.estado == 'Pendiente') {
+                  <button nz-button nzType="default" nzDanger (click)="cancelarReserva(reserva)">Cancelar</button>
+                }
+            </div>
+          </nz-card>
+        </div>
+      }
+     </div>
+   }
+
+  <!-- Modal para reseña -->
+  <nz-modal [(nzVisible)]="isVisible" [nzTitle]="reservaSeleccionada.resenia? 'Reseñar cuidador' : 'Ver Reseña'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+      <div>
+        <strong>Puntuación:</strong>
+        <nz-rate [(ngModel)]="puntuacion" [nzAllowHalf]="true" style="margin-left: 8px;" [disabled]="reservaSeleccionada.resenia? true : false"></nz-rate>
+      </div>
+      <div class="mt-2">
+        <strong>Comentario:</strong>
+        <textarea rows="4" nz-input [(ngModel)]="comentario" [disabled]="reservaSeleccionada.resenia? true : false"></textarea>
+      </div>
+    </ng-container>
+  </nz-modal>
+</div>

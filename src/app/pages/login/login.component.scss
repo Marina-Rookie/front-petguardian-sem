@@ -1,0 +1,85 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+  padding: 20px;
+
+  .login-card {
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    ::ng-deep {
+      .ant-card-head {
+        border-bottom: none;
+        padding: 24px 24px 0;
+
+        .ant-card-head-title {
+          font-size: 24px;
+          font-weight: 600;
+          text-align: center;
+          color: #1890ff;
+        }
+      }
+
+      .ant-card-body {
+        padding: 24px;
+      }
+
+      .cover-image {
+        padding: 24px;
+        background-color: #f9f9f9;
+        text-align: center;
+
+        img {
+          max-width: 200px;
+          height: auto;
+        }
+      }
+
+      .ant-form-item {
+        margin-bottom: 24px;
+      }
+
+      .ant-input-affix-wrapper {
+        padding: 8px 11px;
+      }
+
+      .ant-btn {
+        height: 40px;
+        font-size: 16px;
+      }
+
+      .ant-divider {
+        margin: 24px 0;
+        color: rgba(0, 0, 0, 0.45);
+      }
+
+      .login-button {
+        margin-top: 8px;
+      }
+
+      .ant-checkbox-wrapper {
+        color: rgba(0, 0, 0, 0.65);
+      }
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .login-container {
+    .login-card {
+      ::ng-deep {
+        .ant-card-head-title {
+          font-size: 20px;
+        }
+
+        .cover-image img {
+          max-width: 150px;
+        }
+      }
+    }
+  }
+}

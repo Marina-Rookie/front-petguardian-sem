@@ -1,0 +1,35 @@
+.add-button {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  margin: 5px;
+  background-color: white;
+  color: #ee9102;
+  border: 1px solid #ee9102;
+  p {
+    font-size: 70px;
+    margin-bottom: 0px;
+  }
+}
+img {
+  border-radius: 50%;
+}
+
+:host ::ng-deep .avatar-uploader > .ant-upload {
+  width: 80%;
+  height: 250px;
+  margin-left: 5%;
+}
+
+.card-agregar {
+  width: 300px;
+  height: 365px;
+  margin-top: 15px;
+  border-radius: 20px;
+}
+
+@media (min-width: 769px) and (max-width: 1500px) {
+  .card-agregar {
+    width: 250px;
+  }
+}
