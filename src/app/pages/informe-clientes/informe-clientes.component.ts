@@ -72,10 +72,10 @@ export class InformesClientesComponent {
 
     const filtros = {
       nombre: this.searchValue,
-      reservasMin: this.selectedStatus === '1-10' ? 1 : this.selectedStatus === '11-20' ? 11 : this.selectedStatus === '21-50' ? 21 : 51,
-      reservasMax: this.selectedStatus === '1-10' ? 10 : this.selectedStatus === '11-20' ? 20 : this.selectedStatus === '21-50' ? 50 : 100,
+      reservasMin: this.selectedStatus === 'Todos' ? undefined: this.selectedStatus === '0' ? undefined :this.selectedStatus === '1-10' ? 1 : this.selectedStatus === '11-20' ? 11 : this.selectedStatus === '21-50' ? 21 : 51,
+      reservasMax: this.selectedStatus === 'Todos' ? undefined :this.selectedStatus === '0' ? 0 :this.selectedStatus === '1-10' ? 10 : this.selectedStatus === '11-20' ? 20 : this.selectedStatus === '21-50' ? 50 : 100,
     };
-
+console.log(filtros);
     this.informeClientesService.getInformesClientes(filtros).subscribe({
       next: (data: ClienteInforme) => {
         this.informe = data;

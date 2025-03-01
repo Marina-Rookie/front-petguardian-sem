@@ -55,7 +55,7 @@ export class InformesCuidadoresComponent {
   }
 
   searchValue = '';
-  selectedStatus = 'Habilitado';
+  selectedStatus = 'Pendiente';
   listCuidadores: Cuidador[] = [];
 
   constructor(
@@ -72,7 +72,7 @@ export class InformesCuidadoresComponent {
 
     const filtros = {
       nombre: this.searchValue,
-      estado: this.selectedStatus,
+       estado: this.selectedStatus === 'Todos' ? undefined : this.selectedStatus
     };
 
     this.informeService.getInformesCuidadores(filtros).subscribe({
