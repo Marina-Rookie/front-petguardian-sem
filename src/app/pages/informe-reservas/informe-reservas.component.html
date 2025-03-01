@@ -1,0 +1,83 @@
+<h2>Informe de Reservas</h2>
+
+<nz-divider></nz-divider>
+
+<app-stats-reservas [estadisticas]="estadisticas"></app-stats-reservas>
+
+<nz-divider></nz-divider>
+
+<div class="filters">
+  <nz-input-group [nzSuffix]="suffixIconSearch">
+    <input
+      type="text"
+      nz-input
+      placeholder="Buscar por nombre"
+      [(ngModel)]="nombre"
+    />
+  </nz-input-group>
+  <ng-template #suffixIconSearch>
+    <span nz-icon nzType="search"></span>
+  </ng-template>
+
+  <div class="date-filter">
+    <span>Fecha Inicio</span>
+    <input type="date" nz-input [(ngModel)]="fechaInicio" />
+  </div>
+
+  <div class="date-filter">
+    <span>Fecha Fin</span>
+    <input type="date" nz-input [(ngModel)]="fechaFin" />
+  </div>
+
+  <div class="status-filter">
+    <span>Estado</span>
+    <nz-select [(ngModel)]="estado" style="width: 120px">
+      <nz-option nzValue="" nzLabel="Todos"></nz-option>
+      <nz-option nzValue="Pendiente" nzLabel="Pendiente"></nz-option>
+      <nz-option nzValue="Finalizada" nzLabel="Finalizada"></nz-option>
+      <nz-option nzValue="Aprobada" nzLabel="Aprobada"></nz-option>
+      <nz-option nzValue="Cancelada" nzLabel="Cancelada"></nz-option>
+      <nz-option nzValue="No aprobada" nzLabel="No aprobada"></nz-option>
+      <nz-option nzValue="Anulada" nzLabel="Anulada"></nz-option>
+    </nz-select>
+  </div>
+
+  <button nz-button nzType="primary" (click)="getReservas()">FILTRAR</button>
+</div>
+
+<nz-divider></nz-divider>
+
+@if(loading) {
+  <div class="mt-4 mb-4">
+    <nz-spin [nzSize]="'large'"></nz-spin>
+  </div>
+} @else {
+  <div class="table-responsive">
+    <nz-table #basicTable [nzData]="reservas">
+      <thead>
+        <tr>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+          <th>Comentario</th>
+          <th>Cliente</th>
+          <th>Cuidador</th>
+          <th>Estado</th>
+          <th>Puntuación</th>
+          <th>Reseña</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{ data.fechaInicio }}</td>
+          <td>{{ data.fechaFin }}</td>
+          <td>{{ data.comentario }}</td>
+          <td>{{ data.cliente }}</td>
+          <td>{{ data.cuidador }}</td>
+          <td>{{ data.estado }}</td>
+          <td>{{ data.puntuacion }}</td>
+          <td>{{ data.resenia?.comentario }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+}

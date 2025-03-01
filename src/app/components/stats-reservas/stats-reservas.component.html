@@ -1,0 +1,112 @@
+<h3 nz-typography>Estadísticas</h3>
+<div class="row">
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.reservasFiltradas"
+        [nzTitle]="'Reservas Filtradas'"
+        [nzPrefix]="prefixReservasFiltradas"
+      ></nz-statistic>
+      <ng-template #prefixReservasFiltradas><i nz-icon nzType="filter" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.totalReservas"
+        [nzTitle]="'Total Reservas'"
+        [nzPrefix]="prefixTotalReservas"
+      ></nz-statistic>
+      <ng-template #prefixTotalReservas><i nz-icon nzType="team" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.reservasPendientes"
+        [nzTitle]="'Reservas Pendientes'"
+        [nzPrefix]="prefixReservasPendientes"
+      ></nz-statistic>
+      <ng-template #prefixReservasPendientes><i nz-icon nzType="clock-circle" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.reservasFinalizadas"
+        [nzTitle]="'Reservas Finalizadas'"
+        [nzPrefix]="prefixReservasFinalizadas"
+      ></nz-statistic>
+      <ng-template #prefixReservasFinalizadas><i nz-icon nzType="check-circle" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.reservasAprobadas"
+        [nzTitle]="'Reservas Aprobadas'"
+        [nzPrefix]="prefixReservasAprobadas"
+      ></nz-statistic>
+      <ng-template #prefixReservasAprobadas><i nz-icon nzType="check" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.reservasCanceladas"
+        [nzTitle]="'Reservas Canceladas'"
+        [nzPrefix]="prefixReservasCanceladas"
+      ></nz-statistic>
+      <ng-template #prefixReservasCanceladas><i nz-icon nzType="close-circle" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.reservasNoAprobadas"
+        [nzTitle]="'Reservas No Aprobadas'"
+        [nzPrefix]="prefixReservasNoAprobadas"
+      ></nz-statistic>
+      <ng-template #prefixReservasNoAprobadas><i nz-icon nzType="close" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.reservasAnuladas"
+        [nzTitle]="'Reservas Anuladas'"
+        [nzPrefix]="prefixReservasAnuladas"
+      ></nz-statistic>
+      <ng-template #prefixReservasAnuladas><i nz-icon nzType="delete" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.totalIngresos"
+        [nzTitle]="'Total Ingresos'"
+        [nzPrefix]="prefixTotalIngresos"
+      ></nz-statistic>
+      <ng-template #prefixTotalIngresos><i nz-icon nzType="dollar" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.promedioPuntuacion"
+        [nzTitle]="'Promedio Puntuación'"
+        [nzPrefix]="prefixPromedioPuntuacion"
+      ></nz-statistic>
+      <ng-template #prefixPromedioPuntuacion><i nz-icon nzType="star" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+</div>
