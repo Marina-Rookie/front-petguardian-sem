@@ -58,24 +58,26 @@
         <tr>
           <th>Fecha Inicio</th>
           <th>Fecha Fin</th>
-          <th>Comentario</th>
+          <th>Turno</th>
           <th>Cliente</th>
           <th>Cuidador</th>
           <th>Estado</th>
+          <th>Precio</th>
           <th>Puntuación</th>
-          <th>Reseña</th>
+
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of basicTable.data">
           <td>{{ data.fechaInicio }}</td>
           <td>{{ data.fechaFin }}</td>
-          <td>{{ data.comentario }}</td>
+          <td>{{ data.turno }}</td>
           <td>{{ data.cliente }}</td>
           <td>{{ data.cuidador }}</td>
           <td>{{ data.estado }}</td>
+          <td>{{ data.precioReserva }}</td>
           <td>{{ data.puntuacion }}</td>
-          <td>{{ data.resenia?.comentario }}</td>
+ 
         </tr>
       </tbody>
     </nz-table>

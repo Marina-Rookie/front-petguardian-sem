@@ -22,7 +22,6 @@
   <div class="status-filter">
     <span>Filtrar por reservas</span>
     <nz-select [(ngModel)]="selectedStatus" style="width: 120px">
-
       <nz-option nzValue="0" nzLabel="0"></nz-option>
       <nz-option nzValue="1-10" nzLabel="1-10"></nz-option>
       <nz-option nzValue="11-20" nzLabel="11-20"></nz-option>
@@ -35,6 +34,8 @@
   <button nz-button nzType="primary" (click)="getInformes()">FILTRAR</button>
 </div>
 
+<nz-divider></nz-divider>
+
 @if(loading) {
   <div class="mt-4 mb-4">
     <nz-spin [nzSize]="'large'"></nz-spin>
@@ -44,7 +45,6 @@
     <nz-table #basicTable [nzData]="listClientes">
       <thead>
         <tr>
-          <th nzWidth="50px"></th>
           <th>Nombre</th>
           <th>Email</th>
           <th>Teléfono</th>
@@ -57,12 +57,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (data of basicTable.data; track $index) {
-        <tr>
-          <td style="padding: 8px;"
-            [nzExpand]="expandSet.has(data._id)"
-            (nzExpandChange)="onExpandChange(data._id, $event)"
-          ></td>
+        <tr *ngFor="let data of basicTable.data">
           <td>{{ data.nombre }} {{ data.apellido }}</td>
           <td>{{ data.email }}</td>
           <td>{{ data.telefono }}</td>
@@ -73,7 +68,6 @@
           <td>{{ data.reservasPendientes }}</td>
           <td>{{ data.reservasNoAprobadas }}</td>
         </tr>
-        }
       </tbody>
     </nz-table>
   </div>

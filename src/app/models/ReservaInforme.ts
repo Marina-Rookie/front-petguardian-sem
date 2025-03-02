@@ -8,6 +8,8 @@ export class Reserva {
   estado: string;
   puntuacion: number;
   resenia: { comentario: string };
+  precioReserva: number;
+  turno: string;
 
   constructor(data: any) {
     this._id = data._id;
@@ -19,6 +21,8 @@ export class Reserva {
     this.estado = data.estado;
     this.puntuacion = data.puntuacion;
     this.resenia = data.resenia;
+    this.precioReserva = data.precioReserva;
+    this.turno = data.turno;
   }
 }
 
@@ -35,16 +39,16 @@ export class Estadisticas {
   promedioPuntuacion: number;
 
   constructor(data: any) {
-    this.reservasFiltradas = data.reservasFiltradas;
-    this.totalReservas = data.totalReservas;
-    this.reservasPendientes = data.reservasPendientes;
-    this.reservasFinalizadas = data.reservasFinalizadas;
-    this.reservasAprobadas = data.reservasAprobadas;
-    this.reservasCanceladas = data.reservasCanceladas;
-    this.reservasNoAprobadas = data.reservasNoAprobadas;
-    this.reservasAnuladas = data.reservasAnuladas;
-    this.totalIngresos = data.totalIngresos;
-    this.promedioPuntuacion = data.promedioPuntuacion;
+    this.reservasFiltradas = data.reservasFiltradas || 0;
+    this.totalReservas = data.totalReservas || 0;
+    this.reservasPendientes = data.reservasPendientes || 0;
+    this.reservasFinalizadas = data.reservasFinalizadas || 0;
+    this.reservasAprobadas = data.reservasAprobadas || 0;
+    this.reservasCanceladas = data.reservasCanceladas || 0;
+    this.reservasNoAprobadas = data.reservasNoAprobadas || 0;
+    this.reservasAnuladas = data.reservasAnuladas || 0;
+    this.totalIngresos = data.totalIngresos || 0;
+    this.promedioPuntuacion = data.promedioPuntuacion || 0;
   }
 }
 

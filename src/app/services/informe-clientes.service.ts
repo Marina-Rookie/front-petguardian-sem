@@ -16,19 +16,19 @@ export class InformeClientesService extends ApiService<any> {
 
   getInformesClientes(filtros: { nombre?: string; apellido?: string; email?: string; reservasMin?: number; reservasMax?: number }) {
     let params = new HttpParams();
-    if (filtros.nombre) {
+    if (filtros.nombre !== undefined) {
       params = params.set('nombre', filtros.nombre);
     }
-    if (filtros.apellido) {
+    if (filtros.apellido !== undefined) {
       params = params.set('apellido', filtros.apellido);
     }
-    if (filtros.email) {
+    if (filtros.email !== undefined) {
       params = params.set('email', filtros.email);
     }
-    if (filtros.reservasMin) {
+    if (filtros.reservasMin !== undefined) {
       params = params.set('reservasMin', filtros.reservasMin.toString());
     }
-    if (filtros.reservasMax) {
+    if (filtros.reservasMax !== undefined) {
       params = params.set('reservasMax', filtros.reservasMax.toString());
     }
 

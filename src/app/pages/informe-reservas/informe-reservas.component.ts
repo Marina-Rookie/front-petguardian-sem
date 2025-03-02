@@ -51,7 +51,7 @@ export class InformeReservasComponent implements OnInit {
   fechaInicio: string = '';
   fechaFin: string = '';
   nombre: string = '';
-  estado: string = '';
+  estado: string = 'Pendiente';
 
   constructor(
     private informeReservasService: InformeReservasService,
@@ -70,11 +70,18 @@ export class InformeReservasComponent implements OnInit {
       nombre: this.nombre,
       estado: this.estado
     };
+    console.log('Filtros:', filtros);
     this.informeReservasService.getReservas(filtros).subscribe({
-      next: (data: ReservaInforme) => {
+      next: (data: any) => {
         console.log('Frontend Data:', data); // Log the data received
-        this.reservas = data.reservas;
-        this.estadisticas = data.estadisticas;
+        if (data && data.reservas && data.estadisticas) {
+          this.reservas = data.reservas.map((reserva: any) => new Reserva(reserva));
+          this.estadisticas = new Estadisticas(data.estadisticas);
+        } else {
+          this.reservas = [];
+          this.estadisticas = new Estadisticas({});
+          this.msg.error('El formato de los datos recibidos no es válido');
+        }
         this.loading = false;
       },
       error: (error) => {
