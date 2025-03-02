@@ -1,0 +1,68 @@
+<h3 nz-typography>Estadísticas</h3>
+<div class="row">
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.totalClientes"
+        [nzTitle]="'Total Clientes'"
+        [nzPrefix]="prefixTotalClientes"
+      ></nz-statistic>
+      <ng-template #prefixTotalClientes><i nz-icon nzType="team" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.clientesFiltrados"
+        [nzTitle]="'Clientes Filtrados'"
+        [nzPrefix]="prefixClientesFiltrados"
+      ></nz-statistic>
+      <ng-template #prefixClientesFiltrados><i nz-icon nzType="filter" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.clientes1a10"
+        [nzTitle]="'Clientes 1-10 Reservas'"
+        [nzPrefix]="prefixClientes1a10"
+      ></nz-statistic>
+      <ng-template #prefixClientes1a10><i nz-icon nzType="number" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.clientes11a20"
+        [nzTitle]="'Clientes 11-20 Reservas'"
+        [nzPrefix]="prefixClientes11a20"
+      ></nz-statistic>
+      <ng-template #prefixClientes11a20><i nz-icon nzType="number" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.clientes21a50"
+        [nzTitle]="'Clientes 21-50 Reservas'"
+        [nzPrefix]="prefixClientes21a50"
+      ></nz-statistic>
+      <ng-template #prefixClientes21a50><i nz-icon nzType="number" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.clientes51a100"
+        [nzTitle]="'Clientes 51-100 Reservas'"
+        [nzPrefix]="prefixClientes51a100"
+      ></nz-statistic>
+      <ng-template #prefixClientes51a100><i nz-icon nzType="number" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
+</div>

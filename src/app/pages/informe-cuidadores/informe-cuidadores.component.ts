@@ -15,13 +15,13 @@ import {
   CuidadorInforme,
   Estadisticas,
 } from '../../models/CuidadorInforme';
-import { InformeService } from '../../services/informe.service';
+import { InformeService } from '../../services/informe-cuidadores.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NgZorroModule } from '../../ngzorro.module';
 
 @Component({
-  selector: 'app-informes',
+  selector: 'app-informes-cuidadores',
   standalone: true,
   imports: [
     CommonModule,
@@ -29,10 +29,10 @@ import { NgZorroModule } from '../../ngzorro.module';
     NgZorroModule,
     StatsCuidadoresComponent
   ],
-  templateUrl: './informes.component.html',
-  styleUrl: './informes.component.scss',
+  templateUrl: './informe-cuidadores.component.html',
+  styleUrls: ['./informe-cuidadores.component.scss'],
 })
-export class InformesComponent {
+export class InformesCuidadoresComponent {
   informe: CuidadorInforme;
   estadisticas: Estadisticas = {
     cuidadoresPendientes: 0,
@@ -55,7 +55,7 @@ export class InformesComponent {
   }
 
   searchValue = '';
-  selectedStatus = 'Habilitado';
+  selectedStatus = 'Pendiente';
   listCuidadores: Cuidador[] = [];
 
   constructor(
@@ -72,7 +72,7 @@ export class InformesComponent {
 
     const filtros = {
       nombre: this.searchValue,
-      estado: this.selectedStatus,
+       estado: this.selectedStatus === 'Todos' ? undefined : this.selectedStatus
     };
 
     this.informeService.getInformesCuidadores(filtros).subscribe({
