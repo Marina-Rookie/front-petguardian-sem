@@ -17,7 +17,7 @@ import { CuidadorService } from '../../services/cuidador.service';
 import { ClienteService } from '../../services/cliente.service';
 import { environment } from '../../../environments/environment.prod';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
@@ -57,7 +57,8 @@ export class PerfilComponent implements OnInit {
     private mascotaService: MascotaService,
     private cuidadorService: CuidadorService,
     private clienteService: ClienteService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
   }
 
@@ -192,6 +193,19 @@ export class PerfilComponent implements OnInit {
         },
       });
     }
+  }
+
+  darDeBajaUsuario() {
+    this.clienteService.eliminarUsuario(this.idUsuario).subscribe({
+      next: (data) => {
+        this.msg.success('Usuario dado de baja con éxito');
+        this.localStorageService.clear();
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        this.msg.error('Error al dar de baja al usuario');
+      },
+    });
   }
 
   showModal(): void {

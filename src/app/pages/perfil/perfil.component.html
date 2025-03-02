@@ -93,11 +93,16 @@
             }
           </div>
           <div class="row d-flex justify-content-center">
-              <div class="col-12 col-lg-6 col-xl-g col-xxl-6 d-flex justify-content-center">
-                <button nz-button nzSize="large" nzType="primary" (click)="actualizarDatosPerfil()">
-                  Guardar datos
-                </button>
-              </div>
+            <div class="col-12 col-lg-6 col-xl-6 col-xxl-6 d-flex justify-content-center">
+              <button nz-button nzSize="large" nzType="primary" (click)="actualizarDatosPerfil()">
+                Guardar datos
+              </button>
+            </div>
+            <div class="col-12 col-lg-6 col-xl-6 col-xxl-6 d-flex justify-content-center">
+              <button nz-button nzSize="large" nzType="default" nzDanger (click)="darDeBajaUsuario()">
+                Dar de baja usuario
+              </button>
+            </div>
           </div>
         </form>
       </div>

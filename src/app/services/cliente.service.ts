@@ -16,4 +16,7 @@ export class ClienteService extends ApiService<Cliente>{
     super(http, `${environment.url_server}` + 'usuarios');
   }
 
+  eliminarUsuario(id: string): Observable<any> {
+    return this.http.put(`${this.authURL}usuarios/eliminar/${id}`, {});
+  }
 }
