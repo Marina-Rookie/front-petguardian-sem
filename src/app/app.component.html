@@ -32,16 +32,15 @@
                 </li>
               }
               @if (getIsAdmin()) {
-                <li>
-                  <button mat-button class="sidenav-item" routerLink="/informes" (click)="closeSidenavIfMobile()">
-                    <div>
-                      <span nz-icon nzType="file-done" nzTheme="outline" class="nz-icon"></span>
-                    </div>
-                    <div>
-                      <span>Informes</span>
-                    </div>
-                  </button>
-                </li>
+                <ul nz-menu nzMode="inline">
+                  <li nz-submenu nzTitle="Informes" nzIcon="file-done" nzPlacement="topCenter">
+                    <ul>
+                      <li nz-menu-item [routerLink]="'/informe-cuidadores'">Cuidadores</li>
+                      <li nz-menu-item [routerLink]="'/informe-clientes'">Clientes</li>
+                      <li nz-menu-item [routerLink]="'/informe-reservas'">Reservas</li>
+                    </ul>
+                  </li>
+                </ul>
               }
               @if (getIsCliente() || getIsCuidadorHabilitado()) {
                 <li>

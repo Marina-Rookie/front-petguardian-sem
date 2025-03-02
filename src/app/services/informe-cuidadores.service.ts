@@ -11,7 +11,7 @@ export class InformeService extends ApiService<any>{
   authURL = environment.url_server;
 
   constructor(http: HttpClient) {
-    super(http, `${environment.url_server}` + 'informes');
+    super(http, `${environment.url_server}` + 'informe-cuidadores');
   }
 
   getInformesCuidadores(filtros: { nombre?: string; apellido?: string; email?: string; estado?: string }) {

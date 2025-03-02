@@ -8,7 +8,9 @@ import { ReservaComponent } from './pages/reserva/reserva.component';
 import { ReservasCuidadorComponent } from './pages/reservas-cuidador/reservas-cuidador.component';
 import { AuthGuardService } from './services/auth/auth.guard';
 import { RolGuard } from './services/auth/roles-auth.guard';
-import { InformesComponent } from './pages/informes/informes.component';
+import { InformesCuidadoresComponent } from './pages/informe-cuidadores/informe-cuidadores.component';
+import { InformesClientesComponent } from './pages/informe-clientes/informe-clientes.component';
+import { InformeReservasComponent } from './pages/informe-reservas/informe-reservas.component';
 
 export const routes: Routes = [
   {
@@ -46,8 +48,20 @@ export const routes: Routes = [
     canActivate: [AuthGuardService],
   },
   {
-    path: 'informes',
-    component: InformesComponent,
+    path: 'informe-cuidadores',
+    component: InformesCuidadoresComponent,
+    canActivate: [AuthGuardService, RolGuard],
+    data: { expectedRoles: ['Administrador'] },
+  },
+  {
+    path: 'informe-clientes',
+    component: InformesClientesComponent,
+    canActivate: [AuthGuardService, RolGuard],
+    data: { expectedRoles: ['Administrador'] },
+  },
+  {
+    path: 'informe-reservas',
+    component: InformeReservasComponent,
     canActivate: [AuthGuardService, RolGuard],
     data: { expectedRoles: ['Administrador'] },
   },

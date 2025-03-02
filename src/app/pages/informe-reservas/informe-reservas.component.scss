@@ -1,0 +1,71 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.status-filter {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.date-filter {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+nz-input-group {
+  width: 100%;
+  max-width: 200px;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.nested-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.nested-table th,
+.nested-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .status-filter {
+    width: 100%;
+  }
+
+  .date-filter {
+    width: 100%;
+  }
+
+  nz-input-group {
+    width: 100%;
+  }
+}
