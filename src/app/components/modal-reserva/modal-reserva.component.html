@@ -24,16 +24,31 @@
             </nz-form-control>
           </nz-form-item>
           <ng-container *ngIf="availabilityChecked && turnosDisponibles.length > 0">
-            <nz-form-item>
-              <nz-form-label nzFor="turno">Turno</nz-form-label>
+            <nz-form-item *ngIf="!editByDay">
+              <nz-form-label nzFor="horaTurno">Hora Turno</nz-form-label>
               <nz-form-control [nzSpan]="24">
-                <nz-select nzPlaceHolder="Seleccione el turno de la reserva" formControlName="horaTurno">
+                <nz-select nzPlaceHolder="Seleccione el turno de la reserva" formControlName="horaTurno" (ngModelChange)="setDiasReserva(formReserva.get('fechaInicio')?.value, formReserva.get('fechaFin')?.value)">
                   <ng-container *ngFor="let turno of turnosDisponibles; trackBy: trackTurno">
                     <nz-option [nzLabel]="turno" [nzValue]="turno"></nz-option>
                   </ng-container>
                 </nz-select>
               </nz-form-control>
             </nz-form-item>
+            <button nz-button nzType="link" (click)="toggleEditByDay()">
+              {{ editByDay ? 'Volver a selección única' : 'Editar por día' }}
+            </button>
+            <ng-container *ngIf="editByDay">
+              <nz-form-item *ngFor="let dia of diasReservaArray.controls; let i = index">
+                <nz-form-label nzFor="horaTurno">Turno para {{ dia.value.fecha | date: 'dd-MM-yyyy' }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                  <nz-select [nzPlaceHolder]="dia.value.horaTurno" [formControlName]="'diasReserva.' + i + '.horaTurno'">
+                    <ng-container *ngFor="let turno of turnosDisponibles; trackBy: trackTurno">
+                      <nz-option [nzLabel]="turno" [nzValue]="turno"></nz-option>
+                    </ng-container>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </ng-container>
             <nz-form-item>
               <nz-form-label nzFor="mascotas">Mascotas</nz-form-label>
               <nz-form-control [nzSpan]="24">

@@ -5,6 +5,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
   Validators,
+  FormArray,
 } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NgZorroModule } from '../../ngzorro.module';
@@ -13,6 +14,7 @@ import { MascotaService } from '../../services/mascota.service';
 import { ReservaService } from '../../services/reserva.service';
 import { ModalService } from '../../services/shared/modals.service';
 import { TurnosService } from '../../services/turnos.service';
+import { eachDayOfInterval } from 'date-fns';
 
 @Component({
   selector: 'app-modal-reserva',
@@ -29,6 +31,8 @@ export class ModalReservaComponent {
   idUsuario: string = '';
   noDisponibilidad: boolean = false;
   availabilityChecked: boolean = false;
+  diasReserva: any[] = [];
+  editByDay: boolean = false;
 
   constructor(
     private modalService: ModalService,
@@ -59,6 +63,8 @@ export class ModalReservaComponent {
   resetAvailabilityCheck() {
     this.noDisponibilidad = false;
     this.availabilityChecked = false;
+    this.diasReserva = [];
+    this.editByDay = false;
   }
 
   formInit() {
@@ -66,11 +72,16 @@ export class ModalReservaComponent {
       fechaInicio: [null, [Validators.required]],
       fechaFin: [null, [Validators.required]],
       horaTurno: [null, [Validators.required]],
+      diasReserva: this.fb.array([]),
       mascotas: [null, [Validators.required]],
       clienteId: [this.idUsuario],
       cuidador: [this.cuidador._id],
       comentario: [null],
     });
+  }
+
+  get diasReservaArray(): FormArray {
+    return this.formReserva.get('diasReserva') as FormArray;
   }
 
   getTurnosDisponibles() {
@@ -87,8 +98,28 @@ export class ModalReservaComponent {
         this.turnosDisponibles = res;
         this.noDisponibilidad = !(this.turnosDisponibles.length > 0);
         this.availabilityChecked = true;
+        this.setDiasReserva(fechaInicio, fechaFin);
       });
+    } else {
+      this.availabilityChecked = false;
     }
+  }
+
+  setDiasReserva(fechaInicio: string, fechaFin: string) {
+    const interval = eachDayOfInterval({
+      start: new Date(fechaInicio),
+      end: new Date(fechaFin),
+    });
+
+    this.diasReservaArray.clear();
+    interval.forEach((date) => {
+      this.diasReservaArray.push(
+        this.fb.group({
+          fecha: [date, [Validators.required]],
+          horaTurno: [this.formReserva.get('horaTurno')?.value, [Validators.required]],
+        })
+      );
+    });
   }
 
   getMascotasUsuario() {
@@ -98,7 +129,12 @@ export class ModalReservaComponent {
   }
 
   postFormReserva() {
-    this.reservaService.post(this.formReserva.value).subscribe({
+    const reservaData = {
+      ...this.formReserva.value,
+      diasReserva: this.editByDay ? this.diasReservaArray.value : [{ fecha: this.formReserva.get('fechaInicio')?.value, horaTurno: this.formReserva.get('horaTurno')?.value }]
+    };
+
+    this.reservaService.post(reservaData).subscribe({
       next: (res: any) => {
         this.msg.create('success', 'Reserva realizada con éxito');
       },
@@ -115,6 +151,13 @@ export class ModalReservaComponent {
 
   handleCancel(): void {
     this.modalService.hideReservaModal();
+  }
+
+  toggleEditByDay(): void {
+    this.editByDay = !this.editByDay;
+    if (this.editByDay) {
+      this.setDiasReserva(this.formReserva.get('fechaInicio')?.value, this.formReserva.get('fechaFin')?.value);
+    }
   }
 
   trackTurno(index: number, turno: any): any {
