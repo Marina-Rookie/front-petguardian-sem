@@ -14,6 +14,7 @@ import { MascotaService } from '../../services/mascota.service';
 import { ReservaService } from '../../services/reserva.service';
 import { ModalService } from '../../services/shared/modals.service';
 import { TurnosService } from '../../services/turnos.service';
+import { CuidadorService  } from '../../services/cuidador.service';
 import { eachDayOfInterval, format, parseISO } from 'date-fns';
 
 @Component({
@@ -33,6 +34,8 @@ export class ModalReservaComponent {
   availabilityChecked: boolean = false;
   diasReserva: any[] = [];
   editByDay: boolean = false;
+  tarifaTurno: number = 0;
+  precioFinal: number = 0;
 
   constructor(
     private modalService: ModalService,
@@ -41,7 +44,9 @@ export class ModalReservaComponent {
     private msg: NzMessageService,
     private turnoService: TurnosService,
     private mascotaService: MascotaService,
-    private reservaService: ReservaService
+    private reservaService: ReservaService,
+    private cuidadorService: CuidadorService,
+
   ) {}
 
   ngOnInit() {
@@ -57,6 +62,7 @@ export class ModalReservaComponent {
       this.cuidador = cuidador;
       this.formInit();
       this.getMascotasUsuario();
+      this.getTarifaTurnoCuidador();
     });
   }
 
@@ -65,6 +71,7 @@ export class ModalReservaComponent {
     this.availabilityChecked = false;
     this.diasReserva = [];
     this.editByDay = false;
+    this.precioFinal = 0;
   }
 
   formInit() {
@@ -99,6 +106,7 @@ export class ModalReservaComponent {
         this.noDisponibilidad = !(this.turnosDisponibles.length > 0);
         this.availabilityChecked = true;
         this.setDiasReserva(fechaInicio, fechaFin);
+        this.calculatePrecioFinal();
       });
     } else {
       this.availabilityChecked = false;
@@ -128,6 +136,19 @@ export class ModalReservaComponent {
     });
   }
 
+  getTarifaTurnoCuidador() {
+    this.cuidadorService.getCuidadorByUserId(this.cuidador._id).subscribe((res: any) => {
+      this.tarifaTurno = res.tarifaHora;
+    });
+  }
+
+  calculatePrecioFinal() {
+    const fechaInicio = parseISO(this.formReserva.get('fechaInicio')?.value + 'T00:00:00');
+    const fechaFin = parseISO(this.formReserva.get('fechaFin')?.value + 'T00:00:00');
+    const days = eachDayOfInterval({ start: fechaInicio, end: fechaFin }).length;
+    this.precioFinal = days * this.tarifaTurno;
+  }
+
   postFormReserva() {
     const reservaData = {
       ...this.formReserva.value,
@@ -137,7 +158,6 @@ export class ModalReservaComponent {
       }))
     };
     delete reservaData.horaTurno;
-    console.log(reservaData);
     this.reservaService.post(reservaData).subscribe({
       next: (res: any) => {
         this.msg.create('success', 'Reserva realizada con éxito');

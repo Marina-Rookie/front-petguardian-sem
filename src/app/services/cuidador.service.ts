@@ -31,4 +31,7 @@ export class CuidadorService extends ApiService<Cuidador>{
   desaprobarCuidador(id: string): Observable<Cuidador> {
     return this.http.put<Cuidador>(`${this.authURL}usuarios/desaprobar-cuidador/${id}`, {});
   }
+  getCuidadorByUserId(id: string): Observable<Cuidador> {
+    return this.http.get<Cuidador>(`${this.authURL}usuarios/${id}`);
+  }
 }

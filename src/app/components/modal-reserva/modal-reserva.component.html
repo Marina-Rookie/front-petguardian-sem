@@ -72,6 +72,12 @@
                 <textarea nz-input type="text" formControlName="comentario"></textarea>
               </nz-form-control>
             </nz-form-item>
+            <nz-form-item>
+              <nz-form-label nzFor="precioFinal"><strong>Precio Final</strong></nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <input nz-input name="precioFinal" type="text" [value]="precioFinal | currency:'USD'" style="color: black;" disabled />
+              </nz-form-control>
+            </nz-form-item>
           </ng-container>
           <div *ngIf="availabilityChecked && noDisponibilidad && formReserva.get('fechaInicio').value && formReserva.get('fechaFin').value" class="alert alert-danger" style="margin-top: 16px;">
             El cuidador no está disponible en las fechas seleccionadas.
