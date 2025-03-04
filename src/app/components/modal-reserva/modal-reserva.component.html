@@ -39,7 +39,7 @@
             </button>
             <ng-container *ngIf="editByDay">
               <nz-form-item *ngFor="let dia of diasReservaArray.controls; let i = index">
-                <nz-form-label nzFor="horaTurno">Turno para {{ dia.value.fecha | date: 'dd-MM-yyyy' }}</nz-form-label>
+                <nz-form-label nzFor="horaTurno">Turno para {{ dia.value.fecha }}</nz-form-label>
                 <nz-form-control [nzSpan]="24">
                   <nz-select [nzPlaceHolder]="dia.value.horaTurno" [formControlName]="'diasReserva.' + i + '.horaTurno'">
                     <ng-container *ngFor="let turno of turnosDisponibles; trackBy: trackTurno">

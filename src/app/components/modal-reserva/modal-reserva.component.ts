@@ -14,7 +14,7 @@ import { MascotaService } from '../../services/mascota.service';
 import { ReservaService } from '../../services/reserva.service';
 import { ModalService } from '../../services/shared/modals.service';
 import { TurnosService } from '../../services/turnos.service';
-import { eachDayOfInterval } from 'date-fns';
+import { eachDayOfInterval, format, parseISO } from 'date-fns';
 
 @Component({
   selector: 'app-modal-reserva',
@@ -107,15 +107,15 @@ export class ModalReservaComponent {
 
   setDiasReserva(fechaInicio: string, fechaFin: string) {
     const interval = eachDayOfInterval({
-      start: new Date(fechaInicio),
-      end: new Date(fechaFin),
+      start: parseISO(fechaInicio + 'T00:00:00'),
+      end: parseISO(fechaFin + 'T00:00:00'),
     });
 
     this.diasReservaArray.clear();
     interval.forEach((date) => {
       this.diasReservaArray.push(
         this.fb.group({
-          fecha: [date, [Validators.required]],
+          fecha: [format(date, 'yyyy-MM-dd'), [Validators.required]],
           horaTurno: [this.formReserva.get('horaTurno')?.value, [Validators.required]],
         })
       );
@@ -131,9 +131,13 @@ export class ModalReservaComponent {
   postFormReserva() {
     const reservaData = {
       ...this.formReserva.value,
-      diasReserva: this.editByDay ? this.diasReservaArray.value : [{ fecha: this.formReserva.get('fechaInicio')?.value, horaTurno: this.formReserva.get('horaTurno')?.value }]
+      diasReserva: this.diasReservaArray.value.map((dia: any) => ({
+        fecha: dia.fecha,
+        horaTurno: dia.horaTurno,
+      }))
     };
-
+    delete reservaData.horaTurno;
+    console.log(reservaData);
     this.reservaService.post(reservaData).subscribe({
       next: (res: any) => {
         this.msg.create('success', 'Reserva realizada con éxito');
