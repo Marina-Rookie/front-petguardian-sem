@@ -123,8 +123,27 @@
       </nz-form-item>
 
       <nz-form-item>
+        <nz-form-control [nzErrorTip]="domicilioErrorTpl">
+          <nz-input-group nzPrefixIcon="home">
+            <input nz-input formControlName="domicilio" placeholder="Domicilio" (nzStatusChange)="onStatusChange('domicilio')" />
+          </nz-input-group>
+          <ng-template #domicilioErrorTpl let-control>
+            @if(control.dirty && control.errors?.['required']) {
+              Por favor ingresa tu domicilio
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
         <nz-form-control>
           <label nz-checkbox formControlName="cuidador">Quiero registrarme como cuidador</label>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control>
+          <label nz-checkbox formControlName="cliente">Quiero registrarme como cliente</label>
         </nz-form-control>
       </nz-form-item>
 

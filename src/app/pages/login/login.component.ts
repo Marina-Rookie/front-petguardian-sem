@@ -52,7 +52,9 @@ export class LoginComponent {
       nombre: ['', [Validators.required]],
       apellido: ['', [Validators.required]],
       telefono: ['', [Validators.required]],
+      domicilio: ['', [Validators.required]],
       cuidador: [false, [Validators.required]],
+      cliente: [false]
     });
   }
 
