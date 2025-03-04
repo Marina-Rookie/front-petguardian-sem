@@ -27,6 +27,8 @@ export class ModalReservaComponent {
   turnosDisponibles = [];
   mascotas: any = [];
   idUsuario: string = '';
+  noDisponibilidad: boolean = false;
+  availabilityChecked: boolean = false;
 
   constructor(
     private modalService: ModalService,
@@ -42,6 +44,9 @@ export class ModalReservaComponent {
     this.idUsuario = this.localStorageService.getIdUsuario();
     this.modalService.isVisibleModalReserva$.subscribe((isVisible) => {
       this.isVisible = isVisible;
+      if (!isVisible) {
+        this.resetAvailabilityCheck();
+      }
     });
     this.modalService.cuidadorReservaModal$.subscribe((cuidador) => {
       if(cuidador === null) return;
@@ -49,6 +54,11 @@ export class ModalReservaComponent {
       this.formInit();
       this.getMascotasUsuario();
     });
+  }
+
+  resetAvailabilityCheck() {
+    this.noDisponibilidad = false;
+    this.availabilityChecked = false;
   }
 
   formInit() {
@@ -64,17 +74,19 @@ export class ModalReservaComponent {
   }
 
   getTurnosDisponibles() {
-    if (
-      this.formReserva.get('fechaInicio') &&
-      this.formReserva.get('fechaFin')
-    ) {
+    const fechaInicio = this.formReserva.get('fechaInicio')?.value;
+    const fechaFin = this.formReserva.get('fechaFin')?.value;
+    
+    if (fechaInicio && fechaFin) {
       const body = {
         cuidadorId: this.cuidador._id,
-        fechaInicio: this.formReserva.get('fechaInicio')?.value,
-        fechaFin: this.formReserva.get('fechaFin')?.value,
+        fechaInicio: fechaInicio,
+        fechaFin: fechaFin,
       };
       this.turnoService.postTurnosDisponiblidad(body).subscribe((res: any) => {
         this.turnosDisponibles = res;
+        this.noDisponibilidad = !(this.turnosDisponibles.length > 0);
+        this.availabilityChecked = true;
       });
     }
   }
@@ -103,5 +115,13 @@ export class ModalReservaComponent {
 
   handleCancel(): void {
     this.modalService.hideReservaModal();
+  }
+
+  trackTurno(index: number, turno: any): any {
+    return turno;
+  }
+
+  trackMascota(index: number, mascota: any): any {
+    return mascota._id;
   }
 }

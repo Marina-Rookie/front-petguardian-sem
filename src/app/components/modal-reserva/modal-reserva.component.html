@@ -23,14 +23,14 @@
               <input nz-input name="fechaFin" type="date" formControlName="fechaFin" (change)="getTurnosDisponibles()"/>
             </nz-form-control>
           </nz-form-item>
-          @if(turnosDisponibles.length > 0) {
+          <ng-container *ngIf="availabilityChecked && turnosDisponibles.length > 0">
             <nz-form-item>
               <nz-form-label nzFor="turno">Turno</nz-form-label>
               <nz-form-control [nzSpan]="24">
                 <nz-select nzPlaceHolder="Seleccione el turno de la reserva" formControlName="horaTurno">
-                  @for (turno of turnosDisponibles; track turno) {
-                  <nz-option [nzLabel]="turno" [nzValue]="turno"></nz-option>
-                  }
+                  <ng-container *ngFor="let turno of turnosDisponibles; trackBy: trackTurno">
+                    <nz-option [nzLabel]="turno" [nzValue]="turno"></nz-option>
+                  </ng-container>
                 </nz-select>
               </nz-form-control>
             </nz-form-item>
@@ -42,12 +42,12 @@
                   nzPlaceHolder="Seleccione las mascotas de la reserva"
                   formControlName="mascotas"
                 >
-                  @for (m of mascotas; track m) {
-                  <nz-option
-                    [nzLabel]="m.nombre"
-                    [nzValue]="m._id"
-                  ></nz-option>
-                  }
+                  <ng-container *ngFor="let m of mascotas; trackBy: trackMascota">
+                    <nz-option
+                      [nzLabel]="m.nombre"
+                      [nzValue]="m._id"
+                    ></nz-option>
+                  </ng-container>
                 </nz-select>
               </nz-form-control>
             </nz-form-item>
@@ -57,7 +57,10 @@
                 <textarea nz-input type="text" formControlName="comentario"></textarea>
               </nz-form-control>
             </nz-form-item>
-          }
+          </ng-container>
+          <div *ngIf="availabilityChecked && noDisponibilidad && formReserva.get('fechaInicio').value && formReserva.get('fechaFin').value" class="alert alert-danger" style="margin-top: 16px;">
+            El cuidador no está disponible en las fechas seleccionadas.
+          </div>
         </form>
       </div>
     </ng-container>
