@@ -11,6 +11,13 @@
             Cargar foto
           </button>
         </nz-upload>
+        <div class="mt-2">
+          <strong>
+            <span *ngIf="isCliente">Cliente</span>
+            <span *ngIf="isAdmin">Administrador</span>
+            <span *ngIf="!isCliente && !isAdmin">Cuidador</span>
+          </strong>
+        </div>
       </div>
       <div class="col-12 col-md-8">
         <form [formGroup]="isCliente ? formPerfilCliente : formPerfilCuidador">
