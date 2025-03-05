@@ -18,6 +18,7 @@ import { ClienteService } from '../../services/cliente.service';
 import { environment } from '../../../environments/environment.prod';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-perfil',
@@ -58,7 +59,8 @@ export class PerfilComponent implements OnInit {
     private cuidadorService: CuidadorService,
     private clienteService: ClienteService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private modal: NzModalService
   ) {
   }
 
@@ -205,6 +207,15 @@ export class PerfilComponent implements OnInit {
       error: (error) => {
         this.msg.error('Error al dar de baja al usuario');
       },
+    });
+  }
+
+  confirmDelete(): void {
+    this.modal.confirm({
+      nzTitle: '¿Está seguro que desea eliminar el perfil?',
+      nzContent: 'Esta acción no se puede deshacer',
+      nzOnOk: () => this.darDeBajaUsuario(),
+      nzOnCancel: () => console.log('Cancelado')
     });
   }
 
