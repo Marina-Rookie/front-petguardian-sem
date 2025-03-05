@@ -26,6 +26,8 @@ export class ReservaComponent {
   reservaSeleccionada: Reserva = {} as Reserva;
   loading: boolean = false;
   isMobile: boolean = window.innerWidth <= 768;
+  expandSet = new Set<string>();
+  turnos: { [key: string]: any[] } = {};
 
   constructor(
     private service: ReservaService,
@@ -110,5 +112,23 @@ export class ReservaComponent {
       next: () => this.getReservas(),
       error: (error: any) => console.error(error)
     });
+  }
+
+  onExpandChange(id: string, checked: boolean): void {
+    if (checked) {
+      this.expandSet.add(id);
+      this.service.getTurnosPorReserva(id).subscribe({
+        next: (data: any[]) => {
+          this.turnos[id] = data;
+        },
+        error: (error: any) => {
+          console.error(error);
+        }
+
+      });
+              console.log('Turnos:', this.turnos);
+    } else {
+      this.expandSet.delete(id);
+    }
   }
 }

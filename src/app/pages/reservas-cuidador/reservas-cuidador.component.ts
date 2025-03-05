@@ -21,6 +21,8 @@ export class ReservasCuidadorComponent {
   comentario: string = '';
   puntuacion: number = 0;
   reservaSeleccionada: Reserva = {} as Reserva;
+  expandSet = new Set<string>();
+  turnos: { [key: string]: any[] } = {};
 
   constructor(
     private service: ReservaService,
@@ -107,5 +109,21 @@ export class ReservasCuidadorComponent {
 
   handleCancel(): void {
     this.isVisible = false;
+  }
+
+  onExpandChange(id: string, checked: boolean): void {
+    if (checked) {
+      this.expandSet.add(id);
+      this.service.getTurnosPorReserva(id).subscribe({
+        next: (data: any[]) => {
+          this.turnos[id] = data;
+        },
+        error: (error: any) => {
+          console.error(error);
+        }
+      });
+    } else {
+      this.expandSet.delete(id);
+    }
   }
 }

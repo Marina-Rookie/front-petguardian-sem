@@ -212,7 +212,7 @@ export class PerfilComponent implements OnInit {
 
   confirmDelete(): void {
     this.modal.confirm({
-      nzTitle: '¿Está seguro que desea eliminar el perfil?',
+      nzTitle: '¿Está seguro que desea dar de baja su perfil?',
       nzContent: 'Esta acción no se puede deshacer',
       nzOnOk: () => this.darDeBajaUsuario(),
       nzOnCancel: () => console.log('Cancelado')

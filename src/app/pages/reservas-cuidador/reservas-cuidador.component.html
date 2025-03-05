@@ -10,12 +10,12 @@
         <nz-table [nzData]="reservas">
           <thead>
             <tr>
+              <th nzWidth="50px"></th>
               <th>Fecha Inicio</th>
               <th>Fecha Fin</th>
               <th>Estado</th>
               <th>Nombre Cliente</th>
               <th>Telefono Cliente</th>
-              <th>Hora turno</th>
               <th>Mascotas</th>
               <th>Precio</th>
               <th>Acciones</th>
@@ -24,6 +24,10 @@
           <tbody>
             @for (reserva of reservas; track reserva._id) {
               <tr>
+                <td style="padding: 8px;"
+                  [nzExpand]="expandSet.has(reserva._id)"
+                  (nzExpandChange)="onExpandChange(reserva._id, $event)"
+                ></td>
                 <td>{{ reserva.fechaInicio | date : "dd-MM-yyyy" }}</td>
                 <td>{{ reserva.fechaFin | date : "dd-MM-yyyy" }}</td>
                 <td>
@@ -32,7 +36,6 @@
                 </td>
                 <td>{{ reserva.cliente.nombre }} {{ reserva.cliente.apellido }}</td>
                 <td>{{ reserva.cliente.telefono }}</td>
-                <td>{{ reserva.horaTurno }}</td>
                 <td>@for(m of reserva.mascotas; track m){
                   {{m.nombre}}
                 }</td>
@@ -58,6 +61,19 @@
                   }
                 </td>
               </tr>
+              <tr [nzExpand]="expandSet.has(reserva._id)">
+                <td colspan="9">
+                  <div *ngIf="expandSet.has(reserva._id)">
+                    <p><strong>Comentario:</strong> {{ reserva.comentario }}</p>
+                    <p><strong>Turnos:</strong></p>
+                    <ul>
+                      @for (turno of turnos[reserva._id]; track turno) {
+                        <li>{{ turno.fecha }} - {{ turno.hora }}</li>
+                      }
+                    </ul>
+                  </div>
+                </td>
+              </tr>
             }
           </tbody>
         </nz-table>
@@ -76,7 +92,6 @@
             <div>
               <p><strong>Estado:</strong> <nz-badge [nzStatus]="getStatusBadge(reserva.estado.estado)"></nz-badge> {{ reserva.estado.estado }}</p>
               <p><strong>Teléfono Cliente:</strong> {{ reserva.cliente.telefono }}</p>
-              <p><strong>Hora turno:</strong> {{ reserva.horaTurno }}</p>
               <p><strong>Mascotas:</strong> @for(m of reserva.mascotas; track m){
                 {{m.nombre}}
               }</p>
@@ -111,16 +126,17 @@
     <nz-spin [nzSize]="'large'"></nz-spin>
   }
 </div>
-  <!-- Modal para reseña -->
-  <nz-modal [(nzVisible)]="isVisible" [nzTitle]="'Ver Reseña'" (nzOnOk)="handleOk()" (nzOnCancel)="handleCancel()">
-    <ng-container *nzModalContent>
-      <div>
-        <strong>Puntuación:</strong>
-        <nz-rate [(ngModel)]="puntuacion" [nzAllowHalf]="true" style="margin-left: 8px;" disabled="true"></nz-rate>
-      </div>
-      <div class="mt-2">
-        <strong>Comentario:</strong>
-        <textarea rows="4" nz-input [(ngModel)]="comentario" disabled="true"></textarea>
-      </div>
-    </ng-container>
-  </nz-modal>
+
+<!-- Modal para reseña -->
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="'Ver Reseña'" (nzOnOk)="handleOk()" (nzOnCancel)="handleCancel()">
+  <ng-container *nzModalContent>
+    <div>
+      <strong>Puntuación:</strong>
+      <nz-rate [(ngModel)]="puntuacion" [nzAllowHalf]="true" style="margin-left: 8px;" disabled="true"></nz-rate>
+    </div>
+    <div class="mt-2">
+      <strong>Comentario:</strong>
+      <textarea rows="4" nz-input [(ngModel)]="comentario" disabled="true"></textarea>
+    </div>
+  </ng-container>
+</nz-modal>

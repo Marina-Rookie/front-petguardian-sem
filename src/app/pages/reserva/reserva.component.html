@@ -13,11 +13,11 @@
       <nz-table [nzData]="reservas">
         <thead>
           <tr>
+            <th nzWidth="50px"></th>
             <th>Fecha Inicio</th>
             <th>Fecha Fin</th>
             <th>Estado</th>
             <th>Cuidador</th>
-            <th>Turno</th>
             <th>Teléfono</th>
             <th>Mascotas</th>
             <th>Precio</th>
@@ -28,6 +28,10 @@
         <tbody>
           @for (reserva of reservas; track $index) {
             <tr>
+              <td style="padding: 8px;"
+                [nzExpand]="expandSet.has(reserva._id)"
+                (nzExpandChange)="onExpandChange(reserva._id, $event)"
+              ></td>
               <td>{{ reserva.fechaInicio | date: 'dd-MM-yyyy' }}</td>
               <td>{{ reserva.fechaFin | date: 'dd-MM-yyyy' }}</td>
               <td>
@@ -35,12 +39,10 @@
                 {{ reserva.estado.estado }}
               </td>
               <td>{{ reserva.cuidador.nombre }} {{ reserva.cuidador.apellido }}</td>
-              <td>{{ reserva.horaTurno }}</td>
               <td>{{ reserva.cuidador.telefono }}</td>
               <td>@for(m of reserva.mascotas; track m){
                 {{m.nombre}}
-              }
-            </td>
+              }</td>
               <td>$ {{ reserva.tarifaTurno * reserva.contadorTurnos }}</td>
               <td class="text-center">
                 @if (reserva.resenia?.puntuacion) {
@@ -59,6 +61,19 @@
                 @if(reserva.estado.estado == 'Pendiente') {
                   <button nz-button nzType="default" nzDanger (click)="cancelarReserva(reserva)">Cancelar</button>
                 }
+              </td>
+            </tr>
+            <tr [nzExpand]="expandSet.has(reserva._id)">
+              <td colspan="10">
+                <div *ngIf="expandSet.has(reserva._id)">
+                  <p><strong>Comentario:</strong> {{ reserva.comentario }}</p>
+                  <p><strong>Turnos:</strong></p>
+                  <ul>
+                    @for (turno of turnos[reserva._id]; track turno) {
+                      <li>{{ turno.fecha }} - {{ turno.hora }}</li>
+                    }
+                  </ul>
+                </div>
               </td>
             </tr>
           }

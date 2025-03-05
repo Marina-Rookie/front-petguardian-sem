@@ -43,4 +43,8 @@ export class ReservaService extends ApiService<Reserva>{
   getReseniasPorCuidador(idCuidador: string): Observable<Reserva[]> {
     return this.http.get<Reserva[]>(`${this.authURL}resenias/reseniasPorUsuario/${idCuidador}`);
   }
+
+  getTurnosPorReserva(idReserva: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.authURL}reservas/turnosPorReserva/${idReserva}`);
+  }
 }
