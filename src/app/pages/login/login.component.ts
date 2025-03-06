@@ -94,7 +94,17 @@ export class LoginComponent {
     this.localStorage.setItem('token', data['token']);
     this.localStorage.setItem('idUsuario', data['idUsuario']);
     this.localStorage.setItem('rol', data['rol']);
-    this.router.navigate(['/perfil/' + data['idUsuario']]);
+
+    const isCliente = this.localStorage.getIsCliente();
+    const isCuidadorHabilitado = this.localStorage.getIsCuidadorHabilitado();
+
+    if (isCliente) {
+      this.router.navigate(['/cuidadores']);
+    } else if (isCuidadorHabilitado) {
+      this.router.navigate(['/reservas-cuidador']);
+    } else {
+      this.router.navigate(['/perfil/' + data['idUsuario']]);
+    }
   }
 
   onStatusChange(field: string) {
