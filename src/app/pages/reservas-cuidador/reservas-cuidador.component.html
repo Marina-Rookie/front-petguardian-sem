@@ -64,7 +64,7 @@
                     <p><strong>Mascotas:</strong></p>
                     <ul>
                       @for (m of reserva.mascotas; track m) {
-                        <li>{{ m.nombre }}</li>
+                        <li>{{ m.nombre }} - {{ tiposMascota[m._id] }}</li>
                       }
                     </ul>
                     <p><strong>Turnos:</strong></p>

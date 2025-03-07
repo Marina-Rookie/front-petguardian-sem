@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { environment } from '../../environments/environment.prod';
 import { Mascota } from '../models/Mascota';
+import { TipoMascota } from '../models/TipoMascota';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +23,9 @@ export class MascotaService extends ApiService<Mascota>{
 
   postImagenMascota(idMascota: string, formData: FormData): Observable<any> {
     return this.http.post(`${this.authURL}mascotas/upload/${idMascota}`, formData);
+  }
+
+  getTipoMascotaById(idMascota: string): Observable<TipoMascota> {
+    return this.http.get<TipoMascota>(`${this.authURL}tiposMascota/mascota/${idMascota}`);
   }
 }

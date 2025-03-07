@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgZorroModule } from '../../ngzorro.module';
 import { ReservaService } from '../../services/reserva.service';
+import { MascotaService } from '../../services/mascota.service';
 import { Reserva } from '../../models/Reserva';
 import { LocalStorageService } from '../../services/localstorage.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -23,9 +24,11 @@ export class ReservasCuidadorComponent {
   reservaSeleccionada: Reserva = {} as Reserva;
   expandSet = new Set<string>();
   turnos: { [key: string]: any[] } = {};
+  tiposMascota: { [key: string]: string } = {};
 
   constructor(
     private service: ReservaService,
+    private mascotaService: MascotaService,
     private localstorage: LocalStorageService,
     private msg: NzMessageService
   ) {}
@@ -40,6 +43,13 @@ export class ReservasCuidadorComponent {
     this.service.getReservasPorCuidador(this.idCuidador).subscribe((res) => {
       this.reservas = res;
       this.loading = false;
+      this.reservas.forEach(reserva => {
+        reserva.mascotas.forEach(mascota => {
+          this.mascotaService.getTipoMascotaById(mascota._id).subscribe(tipoMascota => {
+            this.tiposMascota[mascota._id] = tipoMascota.nombre;
+          });
+        });
+      });
     });
   }
 
