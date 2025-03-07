@@ -14,9 +14,8 @@
               <th>Fecha Inicio</th>
               <th>Fecha Fin</th>
               <th>Estado</th>
-              <th>Nombre Cliente</th>
-              <th>Telefono Cliente</th>
-              <th>Mascotas</th>
+              <th>Cliente</th>
+              <th>Telefono</th>
               <th>Precio</th>
               <th>Acciones</th>
             </tr>
@@ -36,9 +35,6 @@
                 </td>
                 <td>{{ reserva.cliente.nombre }} {{ reserva.cliente.apellido }}</td>
                 <td>{{ reserva.cliente.telefono }}</td>
-                <td>@for(m of reserva.mascotas; track m){
-                  {{m.nombre}}
-                }</td>
                 <td>${{ reserva.tarifaTurno * reserva.contadorTurnos }}</td>
                 <td class="text-center">
                   @if (reserva.estado.estado == 'Pendiente') {
@@ -62,9 +58,15 @@
                 </td>
               </tr>
               <tr [nzExpand]="expandSet.has(reserva._id)">
-                <td colspan="9">
+                <td colspan="8">
                   <div *ngIf="expandSet.has(reserva._id)">
                     <p><strong>Comentario:</strong> {{ reserva.comentario }}</p>
+                    <p><strong>Mascotas:</strong></p>
+                    <ul>
+                      @for (m of reserva.mascotas; track m) {
+                        <li>{{ m.nombre }}</li>
+                      }
+                    </ul>
                     <p><strong>Turnos:</strong></p>
                     <ul>
                       @for (turno of turnos[reserva._id]; track turno) {
