@@ -1,38 +1,30 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { CardMascotaComponent } from '../../components/card-mascota/card-mascota.component';
-import { NuevaMascotaComponent } from '../nueva-mascota/nueva-mascota.component';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgZorroModule } from '../../ngzorro.module';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { LocalStorageService } from '../../services/localstorage.service';
 import { ModalService } from '../../services/shared/modals.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NgZorroModule } from '../../ngzorro.module';
-import { MascotaService } from '../../services/mascota.service';
 import { CuidadorService } from '../../services/cuidador.service';
 import { ClienteService } from '../../services/cliente.service';
 import { environment } from '../../../environments/environment.prod';
-import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { MascotaService } from '../../services/mascota.service';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
   imports: [
-    NgZorroModule,
-    CardMascotaComponent,
-    NuevaMascotaComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgZorroModule
   ],
   templateUrl: './perfil.component.html',
-  styleUrl: './perfil.component.scss',
+  styleUrls: ['./perfil.component.scss']
 })
 export class PerfilComponent implements OnInit {
   isVisible = false;
@@ -43,37 +35,36 @@ export class PerfilComponent implements OnInit {
   isCliente: boolean = false;
   isAdmin: boolean = false;
   isCuidadorPendiente: boolean = false;
-  mascotas: any = [];
   url: string = '';
   urlPerfil: string = '';
   loadingPerfil: boolean = false;
-  loadingMascotas: boolean = false;
   urlApi: string = environment.url_server;
+  mascotas: any = [];
+  loadingMascotas: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private localStorageService: LocalStorageService,
     private modalService: ModalService,
     private msg: NzMessageService,
-    private mascotaService: MascotaService,
     private cuidadorService: CuidadorService,
     private clienteService: ClienteService,
     private route: ActivatedRoute,
     private router: Router,
-    private modal: NzModalService
+    private modal: NzModalService,
+    private mascotaService: MascotaService
   ) {
   }
 
   ngOnInit(): void {
     this.checkScreenSize();
     this.route.paramMap.subscribe(params => {
-      this.idUsuario = params.get('id');
+      this.idUsuario = params.get('id') || '';
     });
     this.url = this.urlApi + 'usuarios/upload/' + this.idUsuario;
     this.isCliente = this.localStorageService.getIsCliente();
     this.isAdmin = this.localStorageService.getIsAdmin();
-    this.isCuidadorPendiente =
-      this.localStorageService.getIsCuidadorPendiente();
+    this.isCuidadorPendiente = this.localStorageService.getIsCuidadorPendiente();
     this.initForm();
     this.buscarDatosPerfil();
     if (this.isCliente) {
@@ -100,7 +91,7 @@ export class PerfilComponent implements OnInit {
           this.setDatosformPerfilCliente(data);
           this.loadingPerfil = false;
         },
-        error: (error) => {
+        error: () => {
           this.loadingPerfil = false;
         },
       });
@@ -110,7 +101,7 @@ export class PerfilComponent implements OnInit {
           this.setDatosformPerfilCuidador(data);
           this.loadingPerfil = false;
         },
-        error: (error) => {
+        error: () => {
           this.loadingPerfil = false;
         },
       });
@@ -178,19 +169,19 @@ export class PerfilComponent implements OnInit {
   actualizarDatosPerfil() {
     if (this.isCliente) {
       this.clienteService.put(this.formPerfilCliente.value, this.idUsuario).subscribe({
-        next: (data) => {
+        next: () => {
           this.msg.success('Datos actualizados con éxito');
         },
-        error: (error) => {
+        error: () => {
           this.msg.error('Error al actualizar los datos');
         },
       });
     } else {
       this.cuidadorService.put(this.formPerfilCuidador.value, this.idUsuario).subscribe({
-        next: (data) => {
+        next: () => {
           this.msg.success('Datos actualizados con éxito');
         },
-        error: (error) => {
+        error: () => {
           this.msg.error('Error al actualizar los datos');
         },
       });
@@ -199,12 +190,12 @@ export class PerfilComponent implements OnInit {
 
   darDeBajaUsuario() {
     this.clienteService.eliminarUsuario(this.idUsuario).subscribe({
-      next: (data) => {
+      next: () => {
         this.msg.success('Usuario dado de baja con éxito');
         this.localStorageService.clear();
         this.router.navigate(['/login']);
       },
-      error: (error) => {
+      error: () => {
         this.msg.error('Error al dar de baja al usuario');
       },
     });
@@ -219,9 +210,13 @@ export class PerfilComponent implements OnInit {
     });
   }
 
-  showModal(): void {
-    this.modalService.setMascotaEditModal(null);
-    this.modalService.showModal();
+  @HostListener('window:resize', [])
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    this.isMobile = window.innerWidth <= 768;
   }
 
   getMascotasPorUsuario() {
@@ -239,14 +234,5 @@ export class PerfilComponent implements OnInit {
 
   recargarMascotas() {
     this.getMascotasPorUsuario();
-  }
-
-  @HostListener('window:resize', [])
-  onResize() {
-    this.checkScreenSize();
-  }
-
-  private checkScreenSize() {
-    this.isMobile = window.innerWidth <= 768;
   }
 }

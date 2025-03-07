@@ -11,6 +11,7 @@ import { RolGuard } from './services/auth/roles-auth.guard';
 import { InformesCuidadoresComponent } from './pages/informe-cuidadores/informe-cuidadores.component';
 import { InformesClientesComponent } from './pages/informe-clientes/informe-clientes.component';
 import { InformeReservasComponent } from './pages/informe-reservas/informe-reservas.component';
+import { MascotasComponent } from './pages/mascotas/mascotas.component';
 
 export const routes: Routes = [
   {
@@ -64,6 +65,12 @@ export const routes: Routes = [
     component: InformeReservasComponent,
     canActivate: [AuthGuardService, RolGuard],
     data: { expectedRoles: ['Administrador'] },
+  },
+  {
+    path: 'mascotas',
+    component: MascotasComponent,
+    canActivate: [AuthGuardService, RolGuard],
+    data: { expectedRoles: ['Cliente'] },
   },
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },

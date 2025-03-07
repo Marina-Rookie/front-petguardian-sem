@@ -77,6 +77,16 @@
                     </div>
                   </button>
                 </li>
+                <li>
+                  <button mat-button class="sidenav-item" routerLink="/mascotas" (click)="closeSidenavIfMobile()">
+                    <div>
+                      <span nz-icon nzType="heart" nzTheme="outline" class="nz-icon"></span>
+                    </div>
+                    <div>
+                      <span>Mascotas</span>
+                    </div>
+                  </button>
+                </li>
               }
               <li>
                 <button mat-button class="sidenav-item" routerLink="/login" (click)="closeSidenavIfMobile()">
