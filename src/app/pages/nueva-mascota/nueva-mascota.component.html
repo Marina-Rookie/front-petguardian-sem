@@ -104,6 +104,16 @@
   </ng-container>
   <ng-container *nzModalFooter>
     <button nz-button nzType="default" (click)="handleCancel()">Cancelar</button>
-    <button nz-button nzType="primary" [disabled]="formMascota.invalid" nz-tooltip nzTooltipTitle="Complete datos faltantes">Guardar</button>
+    <button 
+      nz-button 
+      nzType="primary" 
+      [disabled]="formMascota.invalid" 
+      (click)="handleOk()" 
+      nz-tooltip 
+      [nzTooltipTitle]="formMascota.invalid ? 'Complete datos faltantes' : ''"
+      [nzTooltipTrigger]="formMascota.invalid ? 'hover' : null"
+    >
+      Guardar
+    </button>
   </ng-container>
 </nz-modal>
