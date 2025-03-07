@@ -28,6 +28,9 @@ export class ReservaComponent {
   isMobile: boolean = window.innerWidth <= 768;
   expandSet = new Set<string>();
   turnos: { [key: string]: any[] } = {};
+  totalReservas = 0;
+  pageSize = 10;
+  pageIndex = 1;
 
   constructor(
     private service: ReservaService,
@@ -50,7 +53,8 @@ export class ReservaComponent {
     this.loading = true;
     this.service.getReservasPorCliente(this.idCliente).subscribe({
       next: (data: Reserva[]) => {
-        this.reservas = data;
+        this.reservas = data.slice((this.pageIndex - 1) * this.pageSize, this.pageIndex * this.pageSize);
+        this.totalReservas = data.length;
         this.loading = false;
       },
       error: (error: any) => {
@@ -130,5 +134,10 @@ export class ReservaComponent {
     } else {
       this.expandSet.delete(id);
     }
+  }
+
+  onPageIndexChange(pageIndex: number): void {
+    this.pageIndex = pageIndex;
+    this.getReservas();
   }
 }
