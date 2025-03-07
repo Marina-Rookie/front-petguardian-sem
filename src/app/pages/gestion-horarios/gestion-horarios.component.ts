@@ -96,22 +96,41 @@ export class GestionHorariosComponent {
     );
   }
 
+  eliminarDisponibilidad(): void {
+    const disponibilidad = this.disponibilidadHoraria.find(
+      (disp) => this.compareDates(this.date, new Date(disp.fecha))
+    );
+    if (disponibilidad) {
+      this.disponibilidadService.deleteDisponibilidad(disponibilidad._id).subscribe({
+        next: (response) => {
+          this.msg.success('Disponibilidad eliminada correctamente');
+          this.getDisponiblidad();
+        },
+        error: (error) => {
+          this.msg.error('Error al eliminar la disponibilidad');
+        },
+      });
+    } else {
+      this.msg.error('No hay disponibilidad para eliminar en esta fecha');
+    }
+  }
+
   dateCellRender = (date: Date): string => {
     if (
       date.getMonth() === this.currentMonth &&
       date.getFullYear() === this.currentYear
     ) {
-    for (const disp of this.disponibilidadHoraria) {
-      if (this.compareDates(date, new Date(disp.fecha))) {
-        const horasSeleccionadas = disp.horas.join(', ');
-        return `
-        <div class="turnos-dia">
-          Turnos: ${horasSeleccionadas}
-        </div>
-      `;
+      for (const disp of this.disponibilidadHoraria) {
+        if (this.compareDates(date, new Date(disp.fecha))) {
+          const horasSeleccionadas = disp.horas.join(', ');
+          return `
+            <div class="turnos-dia">
+              ${horasSeleccionadas}
+            </div>
+          `;
+        }
       }
     }
-    };
     return '';
   };
 

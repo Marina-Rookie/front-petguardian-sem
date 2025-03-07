@@ -20,4 +20,8 @@ export class DisponibilidadService extends ApiService<any> {
     return this.http.post<any>(`${this.baseUrl}/update`, entity);
   }
 
+  deleteDisponibilidad(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/${id}`);
+  }
+
 }
