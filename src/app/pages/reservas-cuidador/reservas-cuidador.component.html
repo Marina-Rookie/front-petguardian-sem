@@ -50,29 +50,42 @@
                       Anular
                     </button>
                   }
-                  @if (reserva.estado.estado == 'Finalizada' && reserva.resenia) {
-                    <button nz-button nzType="default" (click)="openModal(reserva)" style="width: 120px;">
-                      Ver reseña
-                    </button>
-                  }
                 </td>
               </tr>
               <tr [nzExpand]="expandSet.has(reserva._id)">
                 <td colspan="8">
                   <div *ngIf="expandSet.has(reserva._id)">
-                    <p><strong>Comentario:</strong> {{ reserva.comentario }}</p>
-                    <p><strong>Mascotas:</strong></p>
-                    <ul>
-                      @for (m of reserva.mascotas; track m) {
-                        <li>{{ m.nombre }} - {{ tiposMascota[m._id] }}</li>
-                      }
-                    </ul>
-                    <p><strong>Turnos:</strong></p>
-                    <ul>
-                      @for (turno of turnos[reserva._id]; track turno) {
-                        <li>{{ turno.fecha }} - {{ turno.hora }}</li>
-                      }
-                    </ul>
+                    <div class="row">
+                      <div class="col-md-4" style="margin-bottom: 20px;">
+                        <p><strong>Comentario:</strong> {{ reserva.comentario }}</p>
+                        <p><strong>Mascotas:</strong></p>
+                        <ul>
+                          @for (m of reserva.mascotas; track m) {
+                            <li>{{ m.nombre }} - {{ tiposMascota[m._id] }}</li>
+                          }
+                        </ul>
+                      </div>
+                      <div class="col-md-4" style="margin-bottom: 20px;">
+                        <p><strong>Turnos:</strong></p>
+                        <ul>
+                          @for (turno of turnos[reserva._id]; track turno) {
+                            <li>{{ turno.fecha }} - {{ turno.hora }}</li>
+                          }
+                        </ul>
+                      </div>
+                      <div class="col-md-4" style="margin-bottom: 20px;">
+                        @if (reserva.estado.estado == 'Finalizada' && reserva.resenia) {
+                          <div>
+                            <strong>Puntuación:</strong>
+                            <nz-rate [ngModel]="reserva.resenia.puntuacion" [nzAllowHalf]="true" disabled="true"></nz-rate>
+                          </div>
+                          <div class="mt-2">
+                            <strong>Reseña:</strong>
+                            <p>{{ reserva.resenia.comentario }}</p>
+                          </div>
+                        }
+                      </div>
+                    </div>
                   </div>
                 </td>
               </tr>
@@ -114,12 +127,18 @@
                   Anular
                 </button>
               }
-              @if (reserva.estado.estado == 'Finalizada' && reserva.resenia) {
-                <button nz-button nzType="default" (click)="openModal(reserva)" style="width: 120px;">
-                  Ver reseña
-                </button>
-              }
             </div>
+
+            @if (reserva.estado.estado == 'Finalizada' && reserva.resenia) {
+              <div class="mt-3">
+                <strong>Puntuación:</strong>
+                <nz-rate [ngModel]="reserva.resenia.puntuacion" [nzAllowHalf]="true" disabled="true"></nz-rate>
+              </div>
+              <div class="mt-2">
+                <strong>Comentario:</strong>
+                <p>{{ reserva.resenia.comentario }}</p>
+              </div>
+            }
           </nz-card>
         }
       </div>
@@ -128,17 +147,3 @@
     <nz-spin [nzSize]="'large'"></nz-spin>
   }
 </div>
-
-<!-- Modal para reseña -->
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="'Ver Reseña'" (nzOnOk)="handleOk()" (nzOnCancel)="handleCancel()">
-  <ng-container *nzModalContent>
-    <div>
-      <strong>Puntuación:</strong>
-      <nz-rate [(ngModel)]="puntuacion" [nzAllowHalf]="true" style="margin-left: 8px;" disabled="true"></nz-rate>
-    </div>
-    <div class="mt-2">
-      <strong>Comentario:</strong>
-      <textarea rows="4" nz-input [(ngModel)]="comentario" disabled="true"></textarea>
-    </div>
-  </ng-container>
-</nz-modal>

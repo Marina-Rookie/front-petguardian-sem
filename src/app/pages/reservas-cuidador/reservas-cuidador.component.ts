@@ -18,9 +18,6 @@ export class ReservasCuidadorComponent {
   loading: boolean = false;
   reservas: Reserva[] = [];
   idCuidador: string = '';
-  isVisible = false;
-  comentario: string = '';
-  puntuacion: number = 0;
   reservaSeleccionada: Reserva = {} as Reserva;
   expandSet = new Set<string>();
   turnos: { [key: string]: any[] } = {};
@@ -102,23 +99,6 @@ export class ReservasCuidadorComponent {
       default:
         return 'default';
     }
-  }
-
-  openModal(reserva: Reserva): void {
-    this.isVisible = true;
-    if(reserva.resenia) {
-      this.comentario = reserva.resenia.comentario;
-      this.puntuacion = reserva.resenia.puntuacion;
-    }
-    this.reservaSeleccionada = reserva;
-  }
-
-  handleOk(): void {
-    this.isVisible = false;
-  }
-
-  handleCancel(): void {
-    this.isVisible = false;
   }
 
   onExpandChange(id: string, checked: boolean): void {
