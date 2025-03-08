@@ -10,6 +10,7 @@
     <thead>
       <tr>
         <th>Nombre Cuidador</th>
+        <th>Domicilio</th>
         <th>Email</th>
         <th>Teléfono</th>
         <th>Acciones</th>
@@ -19,6 +20,7 @@
       @for (data of cuidadores.data; track $index) {
       <tr>
         <td>{{ data.nombre }} {{ data.apellido }}</td>
+        <td>{{ data.domicilio }}</td>
         <td>{{ data.email }}</td>
         <td>{{ data.telefono }}</td>
         <td>

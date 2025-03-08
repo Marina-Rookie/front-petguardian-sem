@@ -15,7 +15,7 @@ import { ModalService } from '../../services/shared/modals.service';
   styleUrl: './card-cuidador.component.scss',
 })
 export class CardCuidadorComponent {
-  @Input() cuidador: Cuidador = new Cuidador('', '', '', '', '', '', 0, '');
+  @Input() cuidador: Cuidador = new Cuidador('', '', '', '', '', '', 0, '', '');
   urlPerfil: string = 'https://res.cloudinary.com/dddkkhrih/image/upload/v1729643117/fsn7sjzhcpzwo3qccpud.jpg';
   constructor(private modalService: ModalService) {}
 
