@@ -72,7 +72,7 @@ export class InformesCuidadoresComponent {
 
     const filtros = {
       nombre: this.searchValue,
-       estado: this.selectedStatus === 'Todos' ? undefined : this.selectedStatus
+      estado: this.selectedStatus === 'Todos' ? undefined : this.selectedStatus
     };
 
     this.informeService.getInformesCuidadores(filtros).subscribe({
@@ -88,5 +88,9 @@ export class InformesCuidadoresComponent {
         this.loading = false;
       },
     });
+  }
+
+  trackById(index: number, item: Cuidador): string {
+    return item._id;
   }
 }

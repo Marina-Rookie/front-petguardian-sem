@@ -43,6 +43,7 @@
       <thead>
         <tr>
           <th nzWidth="50px"></th>
+          <th>Fecha creación</th>
           <th>Nombre</th>
           <th>Email</th>
           <th>Teléfono</th>
@@ -62,13 +63,14 @@
           } @else {
             <td style="padding: 8px;"></td>
           }
+          <td>{{ data.createdAt}}</td>
           <td>{{ data.nombre }} {{ data.apellido }}</td>
           <td>{{ data.email }}</td>
           <td>{{ data.telefono }}</td>
           <td>{{ data.estado }}</td>
           <td>{{ data.tarifaHora }}</td>
           <td>{{ data.promedioPuntuacion }}</td>
-        </tr>
+        <tr>
         <tr [nzExpand]="expandSet.has(data._id)">
           @if(data.estado === 'Habilitado') {
               <tr class="second-row">

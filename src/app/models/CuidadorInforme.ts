@@ -6,6 +6,7 @@ export class Cuidador {
   telefono: string;
   estado: string;
   tarifaHora: number;
+  createdAt: string;
   promedioPuntuacion: number;
   reservasTotales: number;
   reservasCanceladas: number;
@@ -22,6 +23,7 @@ export class Cuidador {
     this.telefono = data.telefono;
     this.estado = data.estado;
     this.tarifaHora = data.tarifaHora;
+    this.createdAt = data.createdAt;
     this.promedioPuntuacion = data.promedioPuntuacion;
     this.reservasTotales = data.reservasTotales;
     this.reservasCanceladas = data.reservasCanceladas;
