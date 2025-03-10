@@ -65,4 +65,15 @@
       <ng-template #prefixClientes51a100><i nz-icon nzType="number" nzTheme="outline"></i></ng-template>
     </nz-card>
   </div>
+
+  <div class="col-12 col-md-6 col-lg-4 mb-3">
+    <nz-card>
+      <nz-statistic
+        [nzValue]="estadisticas.clientesSinReservas"
+        [nzTitle]="'Clientes Sin Reservas'"
+        [nzPrefix]="prefixClientesSinReservas"
+      ></nz-statistic>
+      <ng-template #prefixClientesSinReservas><i nz-icon nzType="user-delete" nzTheme="outline"></i></ng-template>
+    </nz-card>
+  </div>
 </div>

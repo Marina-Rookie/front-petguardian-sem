@@ -36,39 +36,38 @@
 
 <nz-divider></nz-divider>
 
-@if(loading) {
-  <div class="mt-4 mb-4">
-    <nz-spin [nzSize]="'large'"></nz-spin>
-  </div>
-} @else {
-  <div class="table-responsive">
-    <nz-table #basicTable [nzData]="listClientes">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Email</th>
-          <th>Teléfono</th>
-          <th>Reservas Totales</th>
-          <th>Reservas Canceladas</th>
-          <th>Reservas Finalizadas</th>
-          <th>Reservas Aprobadas</th>
-          <th>Reservas Pendientes</th>
-          <th>Reservas No Aprobadas</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of basicTable.data">
-          <td>{{ data.nombre }} {{ data.apellido }}</td>
-          <td>{{ data.email }}</td>
-          <td>{{ data.telefono }}</td>
-          <td>{{ data.reservasTotales }}</td>
-          <td>{{ data.reservasCanceladas }}</td>
-          <td>{{ data.reservasFinalizadas }}</td>
-          <td>{{ data.reservasAprobadas }}</td>
-          <td>{{ data.reservasPendientes }}</td>
-          <td>{{ data.reservasNoAprobadas }}</td>
-        </tr>
-      </tbody>
-    </nz-table>
-  </div>
-}
+<div *ngIf="loading" class="mt-4 mb-4">
+  <nz-spin [nzSize]="'large'"></nz-spin>
+</div>
+<div *ngIf="!loading" class="table-responsive">
+  <nz-table #basicTable [nzData]="listClientes">
+    <thead>
+      <tr>
+        <th>Fecha creación</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Reservas Totales</th>
+        <th>Reservas Canceladas</th>
+        <th>Reservas Finalizadas</th>
+        <th>Reservas Aprobadas</th>
+        <th>Reservas Pendientes</th>
+        <th>Reservas No Aprobadas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.createdAt }}</td>
+        <td>{{ data.nombre }} {{ data.apellido }}</td>
+        <td>{{ data.email }}</td>
+        <td>{{ data.telefono }}</td>
+        <td>{{ data.reservasTotales }}</td>
+        <td>{{ data.reservasCanceladas }}</td>
+        <td>{{ data.reservasFinalizadas }}</td>
+        <td>{{ data.reservasAprobadas }}</td>
+        <td>{{ data.reservasPendientes }}</td>
+        <td>{{ data.reservasNoAprobadas }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

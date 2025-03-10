@@ -41,6 +41,7 @@ export class InformesClientesComponent {
     clientes11a20: 0,
     clientes21a50: 0,
     clientes51a100: 0,
+    clientesSinReservas: 0,
   };
 
   expandSet = new Set<string>();

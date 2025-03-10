@@ -10,6 +10,7 @@ export class Cliente {
   reservasAprobadas: number;
   reservasPendientes: number;
   reservasNoAprobadas: number;
+  createdAt: string;
 
   constructor(data: any) {
     this._id = data._id;
@@ -23,6 +24,7 @@ export class Cliente {
     this.reservasAprobadas = data.reservasAprobadas;
     this.reservasPendientes = data.reservasPendientes;
     this.reservasNoAprobadas = data.reservasNoAprobadas;
+    this.createdAt = data.createdAt;
   }
 }
 
@@ -33,6 +35,7 @@ export class Estadisticas {
   clientes11a20: number;
   clientes21a50: number;
   clientes51a100: number;
+  clientesSinReservas: number;
 
   constructor(data: any) {
     this.totalClientes = data.totalClientes;
@@ -41,6 +44,7 @@ export class Estadisticas {
     this.clientes11a20 = data.clientes11a20;
     this.clientes21a50 = data.clientes21a50;
     this.clientes51a100 = data.clientes51a100;
+    this.clientesSinReservas = data.clientesSinReservas;
   }
 }
 
