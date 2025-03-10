@@ -11,7 +11,7 @@ export class ModalService {
   private isVisibleModalReserva = new BehaviorSubject<boolean>(false);
   isVisibleModalReserva$ = this.isVisibleModalReserva.asObservable();
 
-  private mascotaEditModal = new BehaviorSubject<any>(null);
+  private mascotaEditModal = new BehaviorSubject<{mascota: any, readOnly: boolean} | null>(null);
   mascotaEditModal$ = this.mascotaEditModal.asObservable();
 
   private reseniasModal = new BehaviorSubject<boolean>(false);
@@ -34,8 +34,16 @@ export class ModalService {
     this.isVisibleSubject.next(false);
   }
 
-  setMascotaEditModal(mascota: any) {
-    this.mascotaEditModal.next(mascota);
+  setMascotaEditModal(mascota: any, readOnly: boolean = false) {
+    this.mascotaEditModal.next({ mascota, readOnly });
+  }
+
+  setMascotaDetailsModal(mascota: any) {
+    // Implement the logic to set the details of the mascota
+  }
+
+  showMascotaDetailsModal() {
+    // Implement the logic to show the details modal
   }
 
   showReservaModal() {

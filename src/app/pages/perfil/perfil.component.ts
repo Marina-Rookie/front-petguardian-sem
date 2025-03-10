@@ -41,6 +41,7 @@ export class PerfilComponent implements OnInit {
   urlApi: string = environment.url_server;
   mascotas: any = [];
   loadingMascotas: boolean = false;
+  isEditMode: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -171,6 +172,7 @@ export class PerfilComponent implements OnInit {
       this.clienteService.put(this.formPerfilCliente.value, this.idUsuario).subscribe({
         next: () => {
           this.msg.success('Datos actualizados con éxito');
+          this.isEditMode = false;
         },
         error: () => {
           this.msg.error('Error al actualizar los datos');
@@ -180,6 +182,7 @@ export class PerfilComponent implements OnInit {
       this.cuidadorService.put(this.formPerfilCuidador.value, this.idUsuario).subscribe({
         next: () => {
           this.msg.success('Datos actualizados con éxito');
+          this.isEditMode = false;
         },
         error: () => {
           this.msg.error('Error al actualizar los datos');
@@ -234,5 +237,14 @@ export class PerfilComponent implements OnInit {
 
   recargarMascotas() {
     this.getMascotasPorUsuario();
+  }
+
+  toggleEditMode() {
+    this.isEditMode = !this.isEditMode;
+  }
+
+  cancelarEdicion() {
+    this.isEditMode = false;
+    this.buscarDatosPerfil();
   }
 }

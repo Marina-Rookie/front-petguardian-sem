@@ -41,6 +41,7 @@ export class NuevaMascotaComponent implements OnInit {
   fileList: NzUploadFile[] = [];
   formData: FormData = new FormData();
   urlImagen: string = 'https://via.placeholder.com/300';
+  isReadOnly: boolean = false;
 
   constructor(
     private msg: NzMessageService,
@@ -58,13 +59,19 @@ export class NuevaMascotaComponent implements OnInit {
     this.modalService.isVisible$.subscribe((isVisible) => {
       this.isVisible = isVisible;
     });
-    this.modalService.mascotaEditModal$.subscribe((mascota) => {
-      this.mascota = mascota;
-      if(mascota !== null) {
-        this.formMascota.patchValue(mascota);
-        this.formMascota.controls['tipoMascota'].setValue(mascota.tipoMascota._id);
-        this.formMascota.controls['etapaVida'].setValue(mascota.etapaVida._id);
-        if (mascota.urlImagen) this.urlImagen = mascota.urlImagen;
+    this.modalService.mascotaEditModal$.subscribe((data) => {
+      if (data) {
+        this.isReadOnly = data.readOnly;
+        this.mascota = data.mascota;
+        this.formMascota.patchValue(data.mascota);
+        this.formMascota.controls['tipoMascota'].setValue(data.mascota.tipoMascota._id);
+        this.formMascota.controls['etapaVida'].setValue(data.mascota.etapaVida._id);
+        if (data.mascota.urlImagen) this.urlImagen = data.mascota.urlImagen;
+        if (this.isReadOnly) {
+          this.formMascota.disable();
+        } else {
+          this.formMascota.enable();
+        }
       } else {
         this.formMascota.reset();
         this.urlImagen = 'https://via.placeholder.com/300';

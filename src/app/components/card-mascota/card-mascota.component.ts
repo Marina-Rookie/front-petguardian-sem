@@ -48,4 +48,9 @@ export class CardMascotaComponent implements OnInit {
       },
     });
   }
+
+  showMascotaDetails() {
+    this.modalService.showModal();
+    this.modalService.setMascotaEditModal(this.mascota, true); // Pass true to indicate read-only mode
+  }
 }
