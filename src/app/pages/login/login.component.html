@@ -99,6 +99,21 @@
         </nz-form-control>
       </nz-form-item>
 
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="confirmarPasswordErrorTpl">
+          <nz-input-group nzPrefixIcon="lock">
+            <input nz-input type="password" formControlName="confirmarPassword" placeholder="Confirmar Contraseña" (blur)="onStatusChange('confirmarPassword')" />
+          </nz-input-group>
+          <ng-template #confirmarPasswordErrorTpl let-control>
+            @if(control.dirty && control.errors?.['required']) {
+              Por favor confirma tu contraseña
+            } @else if(registerForm.errors?.['mismatch']) {
+              Las contraseñas no coinciden
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+
       <nz-form-item nz-row [nzGutter]="8">
         <nz-col [nzSpan]="12">
           <nz-form-control [nzErrorTip]="nombreErrorTpl">
@@ -149,7 +164,7 @@
 
       <nz-form-item>
         <nz-form-control>
-          <button nz-button nzType="primary" [nzLoading]="loading" class="login-button" nzBlock [disabled]="registerForm.invalid" type="submit">
+          <button nz-button nzType="primary" [nzLoading]="loading" class="login-button" nzBlock [disabled]="registerForm.invalid || registerForm.errors?.['mismatch']" type="submit">
             @if (!loading) {
               Registrarse
             } @else {

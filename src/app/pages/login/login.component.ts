@@ -6,6 +6,7 @@ import { LocalStorageService } from '../../services/localstorage.service';
 import { LoginService } from '../../services/login.service';
 import { NgZorroModule } from '../../ngzorro.module';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,8 @@ export class LoginComponent {
     private service: LoginService,
     private localStorage: LocalStorageService,
     private router: Router,
-    private msg: NzMessageService
+    private msg: NzMessageService,
+    private notification: NzNotificationService
   ) {
     this.localStorage.crearValues();
   }
@@ -49,13 +51,19 @@ export class LoginComponent {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required]],
+      confirmarPassword: ['', [Validators.required]],
       nombre: ['', [Validators.required]],
       apellido: ['', [Validators.required]],
       telefono: ['', [Validators.required]],
       domicilio: ['', [Validators.required]],
       cuidador: [false, [Validators.required]],
       cliente: [false]
-    });
+    }, { validator: this.passwordMatchValidator });
+  }
+
+  passwordMatchValidator(form: FormGroup) {
+    return form.get('password')?.value === form.get('confirmarPassword')?.value
+      ? null : { 'mismatch': true };
   }
 
   onSubmitRegister(): void {
@@ -71,6 +79,9 @@ export class LoginComponent {
           this.msg.error('Error al registrar usuario');
         },
       });
+    } else if (this.registerForm.errors?.['mismatch']) {
+      this.loading = false;
+      this.notification.error('Error', 'Las contraseñas no coinciden');
     }
   }
 
@@ -113,6 +124,13 @@ export class LoginComponent {
     if (control) {
       control.markAsDirty();
       control.updateValueAndValidity({ onlySelf: true });
+    }
+
+    if (field === 'confirmarPassword') {
+      const passwordControl = this.registerForm.get('password');
+      if (passwordControl && control.value !== passwordControl.value) {
+        this.msg.warning('Las contraseñas no coinciden');
+      }
     }
   }
 
