@@ -64,6 +64,10 @@ export class LocalStorageService {
     return this.getRol() === 'Cuidador Habilitado';
   }
 
+  getIsCuidadorNoHabilitado() {
+    return this.getRol() === 'Cuidador No Habilitado';
+  }
+
   clear(): void {
     localStorage.clear();
   }

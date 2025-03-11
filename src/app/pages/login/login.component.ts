@@ -108,11 +108,14 @@ export class LoginComponent {
 
     const isCliente = this.localStorage.getIsCliente();
     const isCuidadorHabilitado = this.localStorage.getIsCuidadorHabilitado();
+    const rol = data['rol'];
 
     if (isCliente) {
       this.router.navigate(['/cuidadores']);
     } else if (isCuidadorHabilitado) {
       this.router.navigate(['/reservas-cuidador']);
+    } else if (rol === 'Cuidador No Habilitado') {
+      this.router.navigate(['/perfil/' + data['idUsuario']]);
     } else {
       this.router.navigate(['/perfil/' + data['idUsuario']]);
     }

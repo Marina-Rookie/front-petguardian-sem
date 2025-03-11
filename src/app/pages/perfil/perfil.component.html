@@ -1,4 +1,4 @@
-@if(!isCuidadorPendiente) {
+@if(!isCuidadorPendiente && !isCuidadorNoHabilitado) {
   @if(!loadingPerfil) {
     <h2 class="text-center">{{ isEditMode ? 'Editar Perfil' : 'Perfil' }}</h2>
     <div class="row">
@@ -169,5 +169,5 @@
     <nz-spin [nzSize]="'large'"></nz-spin>
   }
 } @else {
-  <h2>Aun no ha sido aprobado por un administrador!</h2>
+  <h2>No ha sido aprobado por un administrador!</h2>
 }

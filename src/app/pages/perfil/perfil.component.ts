@@ -35,6 +35,7 @@ export class PerfilComponent implements OnInit {
   isCliente: boolean = false;
   isAdmin: boolean = false;
   isCuidadorPendiente: boolean = false;
+  isCuidadorNoHabilitado: boolean = false;
   url: string = '';
   urlPerfil: string = '';
   loadingPerfil: boolean = false;
@@ -66,6 +67,7 @@ export class PerfilComponent implements OnInit {
     this.isCliente = this.localStorageService.getIsCliente();
     this.isAdmin = this.localStorageService.getIsAdmin();
     this.isCuidadorPendiente = this.localStorageService.getIsCuidadorPendiente();
+    this.isCuidadorNoHabilitado = this.localStorageService.getIsCuidadorNoHabilitado();
     this.initForm();
     this.buscarDatosPerfil();
     if (this.isCliente) {
