@@ -53,8 +53,8 @@ export class ReservaComponent {
     this.loading = true;
     this.service.getReservasPorCliente(this.idCliente).subscribe({
       next: (data: Reserva[]) => {
-        this.reservas = data.slice((this.pageIndex - 1) * this.pageSize, this.pageIndex * this.pageSize);
         this.totalReservas = data.length;
+        this.reservas = data.slice((this.pageIndex - 1) * this.pageSize, this.pageIndex * this.pageSize);
         this.loading = false;
       },
       error: (error: any) => {
@@ -138,6 +138,11 @@ export class ReservaComponent {
 
   onPageIndexChange(pageIndex: number): void {
     this.pageIndex = pageIndex;
+    this.getReservas();
+  }
+
+  onPageSizeChange(pageSize: number): void {
+    this.pageSize = pageSize;
     this.getReservas();
   }
 }

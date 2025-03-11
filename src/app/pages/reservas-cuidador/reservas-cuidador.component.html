@@ -7,7 +7,7 @@
     <div class="mt-4">
       <!-- Vista para pantallas grandes -->
       <div class="d-none d-md-block">
-        <nz-table [nzData]="reservas">
+        <nz-table [nzData]="reservas" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize" [nzTotal]="total" (nzPageIndexChange)="onPageIndexChange($event)" (nzPageSizeChange)="onPageSizeChange($event)">
           <thead>
             <tr>
               <th nzWidth="50px"></th>

@@ -10,7 +10,7 @@
   <!-- Vista de tabla para pantallas grandes -->
   @if(!loading && !isMobile){
     <div class="mt-4">
-      <nz-table [nzData]="reservas" [nzPageSize]="pageSize" [nzTotal]="totalReservas" [nzPageIndex]="pageIndex" (nzPageIndexChange)="onPageIndexChange($event)">
+      <nz-table [nzData]="reservas" [nzPageSize]="pageSize" [nzTotal]="totalReservas" [nzPageIndex]="pageIndex" (nzPageIndexChange)="onPageIndexChange($event)" (nzPageSizeChange)="onPageSizeChange($event)">
         <thead>
           <tr>
             <th nzWidth="50px"></th>

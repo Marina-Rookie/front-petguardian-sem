@@ -22,6 +22,9 @@ export class ReservasCuidadorComponent {
   expandSet = new Set<string>();
   turnos: { [key: string]: any[] } = {};
   tiposMascota: { [key: string]: string } = {};
+  pageIndex: number = 1;
+  pageSize: number = 10;
+  total: number = 0;
 
   constructor(
     private service: ReservaService,
@@ -39,6 +42,7 @@ export class ReservasCuidadorComponent {
     this.loading = true;
     this.service.getReservasPorCuidador(this.idCuidador).subscribe((res) => {
       this.reservas = res;
+      this.total = res.length;
       this.loading = false;
       this.reservas.forEach(reserva => {
         reserva.mascotas.forEach(mascota => {
@@ -115,5 +119,15 @@ export class ReservasCuidadorComponent {
     } else {
       this.expandSet.delete(id);
     }
+  }
+
+  onPageIndexChange(pageIndex: number): void {
+    this.pageIndex = pageIndex;
+    this.getReservas();
+  }
+
+  onPageSizeChange(pageSize: number): void {
+    this.pageSize = pageSize;
+    this.getReservas();
   }
 }
