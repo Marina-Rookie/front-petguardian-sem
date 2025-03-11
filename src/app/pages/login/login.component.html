@@ -183,5 +183,12 @@
       </nz-form-item>
     </form>
     }
+    <ng-template #successTemplate>
+      <div style="text-align: center;">
+        <span>Éxito</span>
+        <p>Usuario registrado con éxito</p>
+        <button nz-button nzType="primary" (click)="notification.remove()">Aceptar</button>
+      </div>
+    </ng-template>
   </nz-card>
 </div>

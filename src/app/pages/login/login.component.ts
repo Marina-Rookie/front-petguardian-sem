@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -26,6 +26,8 @@ export class LoginComponent {
   loginForm: FormGroup = new FormGroup({});
   checked: boolean = false;
   loading: boolean = false;
+  @ViewChild('successTemplate', { static: true }) successTemplate!: TemplateRef<{}>;
+  public notification: NzNotificationService;
 
   constructor(
     private fb: FormBuilder,
@@ -33,9 +35,10 @@ export class LoginComponent {
     private localStorage: LocalStorageService,
     private router: Router,
     private msg: NzMessageService,
-    private notification: NzNotificationService
+    notification: NzNotificationService
   ) {
     this.localStorage.crearValues();
+    this.notification = notification;
   }
 
   ngOnInit(): void {
@@ -72,6 +75,7 @@ export class LoginComponent {
       this.service.post(this.registerForm.value).subscribe({
         next: (data: any) => {
           this.loading = false;
+          this.notification.template(this.successTemplate, { nzDuration: 0 });
           this.setItemsAndNavigate(data);
         },
         error: (error: any) => {
