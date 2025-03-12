@@ -54,7 +54,7 @@ export class ReservaComponent {
     this.service.getReservasPorCliente(this.idCliente).subscribe({
       next: (data: Reserva[]) => {
         this.totalReservas = data.length;
-        this.reservas = data.slice((this.pageIndex - 1) * this.pageSize, this.pageIndex * this.pageSize);
+        this.reservas = data;
         this.loading = false;
       },
       error: (error: any) => {

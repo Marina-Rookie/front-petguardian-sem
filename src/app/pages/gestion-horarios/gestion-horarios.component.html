@@ -13,19 +13,22 @@
         </ng-container>
       </nz-calendar>
     </div>
-    <div class="col col-12 col-lg-3 col-xxl-3" style="margin-left: 30px;">
-      <h3 nz-typography> {{ date | date:'dd/MM/yyyy' }}</h3>
-      <nz-list [nzDataSource]="turnosDisponibles" [nzRenderItem]="turnoTemplate" [nzNoResult]="'Seleccione una fecha mayor a la actual'">
-        <ng-template #turnoTemplate let-turno>
-          <nz-list-item>
-            <label nz-checkbox [(ngModel)]="turno.selected"> {{ turno.hora }}:00 - {{ turno.hora + 1 }}:00</label>
-          </nz-list-item>
-        </ng-template>
-      </nz-list>
-    </div>
   </div>
   <div nz-row [nzJustify]="'end'" class="mt-4">
-    <button nz-button nzType="primary" (click)="guardarTurnos()">Guardar</button>
+    <button nz-button nzType="primary" (click)="showModal()">Agregar Disponibilidad</button>
     <button nz-button nzType="default" (click)="eliminarDisponibilidad()">Eliminar</button>
   </div>
 </div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Seleccionar Turnos" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <div *nzModalContent>
+    <h3 nz-typography> {{ date | date:'dd/MM/yyyy' }}</h3>
+    <nz-list [nzDataSource]="turnosDisponibles" [nzRenderItem]="turnoTemplate" [nzNoResult]="'Seleccione una fecha mayor a la actual'">
+      <ng-template #turnoTemplate let-turno>
+        <nz-list-item>
+          <label nz-checkbox [(ngModel)]="turno.selected"> {{ turno.hora }}:00 - {{ turno.hora + 1 }}:00</label>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+  </div>
+</nz-modal>

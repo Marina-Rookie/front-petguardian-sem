@@ -5,6 +5,7 @@ import { es_ES, NzI18nService } from 'ng-zorro-antd/i18n';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NgZorroModule } from '../../ngzorro.module';
 import { DisponibilidadService } from '../../services/disponibilidadhoraria.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
 interface DisponibilidadHoraria {
   _id: string;
   fecha: Date;
@@ -28,11 +29,13 @@ export class GestionHorariosComponent {
   currentYear: number = this.date.getFullYear();
   turnosDisponibles: Turno[] = [];
   disponibilidadHoraria: DisponibilidadHoraria[] = [];
+  isVisible = false;
 
   constructor(
     private i18n: NzI18nService,
     private disponibilidadService: DisponibilidadService,
     private msg: NzMessageService,
+    private modal: NzModalService,
   ) {}
 
   ngOnInit() {
@@ -113,6 +116,19 @@ export class GestionHorariosComponent {
     } else {
       this.msg.error('No hay disponibilidad para eliminar en esta fecha');
     }
+  }
+
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.guardarTurnos();
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
   }
 
   dateCellRender = (date: Date): string => {
