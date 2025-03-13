@@ -22,6 +22,7 @@ export class ReservasCuidadorComponent {
   expandSet = new Set<string>();
   turnos: { [key: string]: any[] } = {};
   tiposMascota: { [key: string]: string } = {};
+  etapaVida: { [key: string]: string } = {};
   pageIndex: number = 1;
   pageSize: number = 10;
   total: number = 0;
@@ -48,6 +49,15 @@ export class ReservasCuidadorComponent {
         reserva.mascotas.forEach(mascota => {
           this.mascotaService.getTipoMascotaById(mascota._id).subscribe(tipoMascota => {
             this.tiposMascota[mascota._id] = tipoMascota.nombre;
+          });
+          this.mascotaService.getEtapaVidaById(mascota._id).subscribe({
+            next: (etapaVida) => {
+              this.etapaVida[mascota._id] = etapaVida.nombre;
+              console.log(`Etapa de Vida for ${mascota._id}: ${etapaVida.nombre}`);
+            },
+            error: (error) => {
+              console.error(`Error fetching Etapa de Vida for ${mascota._id}:`, error);
+            }
           });
         });
       });

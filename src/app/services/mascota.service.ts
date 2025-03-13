@@ -28,4 +28,8 @@ export class MascotaService extends ApiService<Mascota>{
   getTipoMascotaById(idMascota: string): Observable<TipoMascota> {
     return this.http.get<TipoMascota>(`${this.authURL}tiposMascota/mascota/${idMascota}`);
   }
+
+  getEtapaVidaById(idMascota: string): Observable<any> {
+    return this.http.get<any>(`${this.authURL}etapasVida/mascota/${idMascota}`);
+  }
 }

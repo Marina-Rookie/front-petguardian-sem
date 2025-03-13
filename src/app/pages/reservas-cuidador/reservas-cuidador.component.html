@@ -56,16 +56,23 @@
                 <td colspan="8">
                   <div *ngIf="expandSet.has(reserva._id)">
                     <div class="row">
-                      <div class="col-md-4" style="margin-bottom: 20px;">
+                      <div class="col-md-6" style="margin-bottom: 20px; border-right: 1px solid #ddd; padding-right: 20px;">
                         <p><strong>Comentario:</strong> {{ reserva.comentario }}</p>
                         <p><strong>Mascotas:</strong></p>
                         <ul>
                           @for (m of reserva.mascotas; track m) {
-                            <li>{{ m.nombre }} - {{ tiposMascota[m._id] }}</li>
+                            <li>
+                              {{ m.nombre }} - {{ tiposMascota[m._id] }} <span *ngIf="etapaVida[m._id]">({{ etapaVida[m._id] }})</span>
+                              <ul>
+                                <li *ngIf="m.obsComida"><strong>Observaciones de Comida:</strong> {{ m.obsComida }}</li>
+                                <li *ngIf="m.obsEnfermedades"><strong>Observaciones de Enfermedades:</strong> {{ m.obsEnfermedades }}</li>
+                                <li *ngIf="m.obsOtros"><strong>Otras Observaciones:</strong> {{ m.obsOtros }}</li>
+                              </ul>
+                            </li>
                           }
                         </ul>
                       </div>
-                      <div class="col-md-4" style="margin-bottom: 20px;">
+                      <div class="col-md-3" style="margin-bottom: 20px; border-right: 1px solid #ddd; padding-left: 20px;">
                         <p><strong>Turnos:</strong></p>
                         <ul>
                           @for (turno of turnos[reserva._id]; track turno) {
@@ -73,7 +80,7 @@
                           }
                         </ul>
                       </div>
-                      <div class="col-md-4" style="margin-bottom: 20px;">
+                      <div class="col-md-3" style="margin-bottom: 20px; padding-left: 20px;">
                         @if (reserva.estado.estado == 'Finalizada' && reserva.resenia) {
                           <div>
                             <strong>Puntuación:</strong>
