@@ -122,16 +122,21 @@
    }
 
   <!-- Modal para reseña -->
-  <nz-modal [(nzVisible)]="isVisible" [nzTitle]="reservaSeleccionada.resenia? 'Reseñar cuidador' : 'Ver Reseña'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <nz-modal [(nzVisible)]="isVisible" [nzTitle]="reservaSeleccionada.resenia ? 'Ver Reseña' : 'Reseñar cuidador'" (nzOnCancel)="handleCancel()" [nzFooter]="reservaSeleccionada.resenia ? null : modalFooter">
     <ng-container *nzModalContent>
       <div>
         <strong>Puntuación:</strong>
-        <nz-rate [(ngModel)]="puntuacion" [nzAllowHalf]="true" style="margin-left: 8px;" [disabled]="reservaSeleccionada.resenia? true : false"></nz-rate>
+        <nz-rate [(ngModel)]="puntuacion" [nzAllowHalf]="true" style="margin-left: 8px;" [disabled]="reservaSeleccionada.resenia ? true : false"></nz-rate>
       </div>
       <div class="mt-2">
         <strong>Comentario:</strong>
-        <textarea rows="4" nz-input [(ngModel)]="comentario" [disabled]="reservaSeleccionada.resenia? true : false"></textarea>
+        <textarea rows="4" nz-input [(ngModel)]="comentario" [disabled]="reservaSeleccionada.resenia ? true : false"></textarea>
       </div>
     </ng-container>
   </nz-modal>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Cancelar</button>
+    <button nz-button nzType="primary" (click)="handleOk()">Aceptar</button>
+  </ng-template>
 </div>

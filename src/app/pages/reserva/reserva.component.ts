@@ -80,7 +80,7 @@ export class ReservaComponent {
 
   openModal(reserva: Reserva): void {
     this.isVisible = true;
-    if(reserva.resenia) {
+    if (reserva.resenia) {
       this.comentario = reserva.resenia.comentario;
       this.puntuacion = reserva.resenia.puntuacion;
     }
