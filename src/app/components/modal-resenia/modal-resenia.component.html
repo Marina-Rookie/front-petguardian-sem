@@ -1,5 +1,5 @@
 @if(isVisible) {
-  <nz-modal [(nzVisible)]="isVisible" nzTitle="Reseñas del cuidador" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Reseñas del cuidador" (nzOnCancel)="handleCancel()" [nzFooter]="null">
     <ng-container *nzModalContent>
       @if(!loading){
         @for (resenia of resenias; track $index) {
