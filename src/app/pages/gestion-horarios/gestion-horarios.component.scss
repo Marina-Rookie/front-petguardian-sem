@@ -15,3 +15,27 @@
     font-size: 5px;
   }
 }
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.title {
+  font-size: 2rem;
+
+}
+
+.large-button {
+  font-size: 1.5rem;
+ 
+  padding: 5px 20px;
+
+  height: 50px;
+
+}
+
+.modal-title {
+  font-size: 1.5rem;
+
+}

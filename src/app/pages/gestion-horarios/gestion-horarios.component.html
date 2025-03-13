@@ -1,29 +1,32 @@
 <div class="turno-cuidador-container">
-  <h2 nz-typography>Gestión de Disponibilidad</h2>
+  <h2 nz-typography class="title">Gestión de Disponibilidad</h2>
   <div nz-row [nzGutter]="16">
-    <div class="col col-12 col-lg-8 col-xxl-8">
-      <nz-calendar
-        [(ngModel)]="date"
-        (nzSelectChange)="onDateSelect($event)"
-        (nzValueChange)="onMonthChange($event)"
-        [nzDisabledDate]="disabledDate"
-      >
+    <!-- Columna para el calendario -->
+    <div nz-col [nzSpan]="24" [nzMd]="16">
+      <nz-calendar [(ngModel)]="date" (nzSelectChange)="onDateSelect($event)" (nzValueChange)="onMonthChange($event)"
+        [nzDisabledDate]="disabledDate">
         <ng-container *nzDateCell="let date">
           <div [innerHTML]="dateCellRender(date)"></div>
         </ng-container>
       </nz-calendar>
     </div>
-  </div>
-  <div nz-row [nzJustify]="'end'" class="mt-4">
-    <button nz-button nzType="primary" (click)="showModal()">Agregar Disponibilidad</button>
-    <button nz-button nzType="default" (click)="eliminarDisponibilidad()">Eliminar</button>
+    <!-- Columna para los botones -->
+    <div nz-col [nzSpan]="24" [nzMd]="8" class="button-container">
+      <div nz-row [nzJustify]="'center'" [nzAlign]="'middle'" class="mt-4">
+        <button nz-button nzType="primary" class="large-button" (click)="showModal()">Agregar Disponibilidad</button>
+      </div>
+      <div nz-row [nzJustify]="'center'" [nzAlign]="'middle'" class="mt-4">
+        <button nz-button nzType="default" class="large-button" (click)="eliminarDisponibilidad()">Eliminar</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <nz-modal [(nzVisible)]="isVisible" nzTitle="Seleccionar Turnos" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
   <div *nzModalContent>
-    <h3 nz-typography> {{ date | date:'dd/MM/yyyy' }}</h3>
-    <nz-list [nzDataSource]="turnosDisponibles" [nzRenderItem]="turnoTemplate" [nzNoResult]="'Seleccione una fecha mayor a la actual'">
+    <h3 nz-typography class="modal-title"> {{ date | date:'dd/MM/yyyy' }}</h3>
+    <nz-list [nzDataSource]="turnosDisponibles" [nzRenderItem]="turnoTemplate"
+      [nzNoResult]="'Seleccione una fecha mayor a la actual'">
       <ng-template #turnoTemplate let-turno>
         <nz-list-item>
           <label nz-checkbox [(ngModel)]="turno.selected"> {{ turno.hora }}:00 - {{ turno.hora + 1 }}:00</label>
