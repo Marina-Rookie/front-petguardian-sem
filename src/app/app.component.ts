@@ -73,4 +73,8 @@ export class AppComponent {
   getIsCuidadorHabilitado() {
     return this.localstorage.getIsCuidadorHabilitado();
   }
+
+  navigateToCuidadores() {
+    this.router.navigate(['/cuidadores']);
+  }
 }
