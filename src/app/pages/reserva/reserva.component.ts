@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LocalStorageService } from '../../services/localstorage.service';
@@ -9,15 +9,14 @@ import { ReseniaService } from '../../services/resenia.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Resenia } from '../../models/Resenia';
 
-
 @Component({
   selector: 'app-reserva',
   standalone: true,
   imports: [NgZorroModule, CommonModule, FormsModule],
   templateUrl: './reserva.component.html',
-  styleUrl: './reserva.component.scss'
+  styleUrls: ['./reserva.component.scss']
 })
-export class ReservaComponent {
+export class ReservaComponent implements OnInit {
   isVisible = false;
   puntuacion = 0;
   comentario = '';
