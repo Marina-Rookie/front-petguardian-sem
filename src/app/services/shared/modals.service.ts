@@ -26,6 +26,9 @@ export class ModalService {
   private recargarMascotasSubject = new BehaviorSubject<boolean>(false);
   recargarMascotas$ = this.recargarMascotasSubject.asObservable();
 
+  private resetFormSubject = new BehaviorSubject<boolean>(false);
+  resetForm$ = this.resetFormSubject.asObservable();
+
   showModal() {
     this.isVisibleSubject.next(true);
   }
@@ -72,5 +75,9 @@ export class ModalService {
 
   triggerRecargarMascotas() {
     this.recargarMascotasSubject.next(true);
+  }
+
+  triggerResetForm() {
+    this.resetFormSubject.next(true);
   }
 }

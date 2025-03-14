@@ -73,12 +73,21 @@ export class NuevaMascotaComponent implements OnInit {
           this.formMascota.enable();
         }
       } else {
-        this.formMascota.reset();
-        this.urlImagen = 'https://via.placeholder.com/300';
+        this.resetForm();
       }
+    });
+    this.modalService.resetForm$.subscribe(() => {
+      this.resetForm();
     });
     this.getTiposMascota();
     this.getEtapasVidaMascota();
+  }
+
+  resetForm() {
+    this.mascota = {} as Mascota;
+    this.formMascota.reset();
+    this.urlImagen = 'https://via.placeholder.com/300';
+    this.formMascota.enable();
   }
 
   formInit() {
@@ -123,7 +132,7 @@ export class NuevaMascotaComponent implements OnInit {
   submitForm() {
     const nuevaMascota = this.formMascota.value;
     nuevaMascota.usuario = this.localStorageService.getIdUsuario();
-    if(this.mascota == null) {
+    if (!this.mascota || !this.mascota._id) {
       this.mascotaService.post(nuevaMascota).subscribe({
         next: (data: any) => {
           this.mascotaService.postImagenMascota(data._id, this.formData).subscribe({
@@ -148,7 +157,10 @@ export class NuevaMascotaComponent implements OnInit {
           });
           this.msg.success('Mascota actualizada con éxito');
           this.modalService.triggerRecargarMascotas();
-        }
+        },
+        error: (error) => {
+          this.msg.error('Error al actualizar la mascota');
+        },
       });
     }
     this.handleCancel();

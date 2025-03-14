@@ -70,6 +70,7 @@ export class MascotasComponent implements OnInit {
   showModal(): void {
     this.modalService.setMascotaEditModal(null);
     this.modalService.showModal();
+    this.modalService.triggerResetForm(); // Trigger form reset
   }
 
   @HostListener('window:resize', [])
